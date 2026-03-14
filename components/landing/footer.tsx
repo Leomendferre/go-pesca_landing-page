@@ -1,6 +1,6 @@
 "use client"
 
-import { InstagramLogo, FacebookLogo, YoutubeLogo, WhatsappLogo } from "@phosphor-icons/react"
+import {ThreadsLogoIcon, InstagramLogoIcon } from "@phosphor-icons/react"
 
 export function Footer() {
   return (
@@ -19,17 +19,11 @@ export function Footer() {
           
           {/* Social Links */}
           <div className="flex items-center gap-4">
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
-              <InstagramLogo weight="fill" className="w-5 h-5" />
+            <a href="https://www.instagram.com/gopescabr" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
+              <InstagramLogoIcon weight="fill" className="w-5 h-5" />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
-              <FacebookLogo weight="fill" className="w-5 h-5" />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
-              <YoutubeLogo weight="fill" className="w-5 h-5" />
-            </a>
-            <a href="#" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
-              <WhatsappLogo weight="fill" className="w-5 h-5" />
+            <a href="https://www.threads.com/@gopescabr" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
+              <ThreadsLogoIcon weight="fill" className="w-5 h-5" />
             </a>
           </div>
         </div>
