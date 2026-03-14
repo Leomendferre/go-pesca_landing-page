@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { MapPin, Fish, Users, ArrowRight } from "@phosphor-icons/react"
+import { MapPinIcon, FishIcon, UsersIcon, ArrowRightIcon } from "@phosphor-icons/react"
 
 export function Hero() {
   return (
@@ -18,7 +18,7 @@ export function Hero() {
           {/* Content */}
           <div className="flex-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm mb-6">
-              <Fish weight="fill" className="w-4 h-4 text-[#d9853c]" />
+              <FishIcon weight="fill" className="w-4 h-4 text-[#d9853c]" />
               <span>A nova era da pesca esportiva no Brasil</span>
             </div>
             
@@ -34,7 +34,7 @@ export function Hero() {
               <Button size="lg" className="bg-[#d9853c] hover:bg-[#c87333] text-white font-semibold px-8" asChild>
                 <a href="#lista">
                   Entrar na Lista de Espera
-                  <ArrowRight weight="bold" className="ml-2 w-5 h-5" />
+                  <ArrowRightIcon weight="bold" className="ml-2 w-5 h-5" />
                 </a>
               </Button>
               <Button size="lg" variant="outline" className="border-white/30 bg-background-transparent text-white hover:bg-white/10 hover:text-white" asChild>
@@ -48,21 +48,21 @@ export function Hero() {
             <div className="flex flex-wrap justify-center lg:justify-start gap-8">
               <div className="text-center lg:text-left">
                 <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <MapPin weight="fill" className="w-5 h-5 text-[#d9853c]" />
+                  <MapPinIcon weight="fill" className="w-5 h-5 text-[#d9853c]" />
                   <span className="text-2xl font-bold text-white">50+</span>
                 </div>
                 <span className="text-white/60 text-sm">Destinos</span>
               </div>
               <div className="text-center lg:text-left">
                 <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <Users weight="fill" className="w-5 h-5 text-[#d9853c]" />
+                  <UsersIcon weight="fill" className="w-5 h-5 text-[#d9853c]" />
                   <span className="text-2xl font-bold text-white">100+</span>
                 </div>
                 <span className="text-white/60 text-sm">Guias Verificados</span>
               </div>
               <div className="text-center lg:text-left">
                 <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <Fish weight="fill" className="w-5 h-5 text-[#d9853c]" />
+                  <FishIcon weight="fill" className="w-5 h-5 text-[#d9853c]" />
                   <span className="text-2xl font-bold text-white">30+</span>
                 </div>
                 <span className="text-white/60 text-sm">Espécies</span>

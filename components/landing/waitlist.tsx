@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
-  EnvelopeSimple,
-  CheckCircle,
+  EnvelopeSimpleIcon,
+  CheckCircleIcon,
   Spinner as SpinnerIcon,
   User,
   MapPin,
@@ -121,7 +121,7 @@ export function Waitlist() {
           {/* Success state */}
           {status === "success" ? (
             <div className="flex items-center gap-4 bg-white/10 rounded-2xl p-6 border border-white/20">
-              <CheckCircle weight="fill" className="w-10 h-10 text-[#5a9d5a] shrink-0" />
+              <CheckCircleIcon weight="fill" className="w-10 h-10 text-[#5a9d5a] shrink-0" />
               <div>
                 <p className="font-bold text-white text-lg">Você está na lista, {submittedName || "pescador"}! 🎣</p>
                 <p className="text-white/70 text-sm mt-1">
@@ -168,7 +168,7 @@ export function Waitlist() {
 
               {/* Email */}
               <div className="relative">
-                <EnvelopeSimple
+                <EnvelopeSimpleIcon
                   weight="duotone"
                   className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none"
                 />

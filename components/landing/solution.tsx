@@ -82,11 +82,13 @@ export function Solution() {
                 className="min-w-0 shrink-0 basis-80 sm:basis-1/2 lg:basis-1/4 pl-4"
               >
                 <Card className="border border-border/50 bg-muted/30 hover:border-[#1c4194]/30 hover:bg-[#1c4194]/5 transition-all h-full">
-                  <CardContent className="p-6">
-                    <div className="w-12 h-12 rounded-xl bg-[#1c4194]/10 flex items-center justify-center mb-4">
-                      <solution.icon weight="duotone" className="w-6 h-6 text-[#1c4194]" />
+                  <CardContent>
+                    <div className="flex items-center gap-4 mb-4">
+                      <div className="w-12 h-12 rounded-xl bg-[#1c4194]/10 flex items-center justify-center">
+                        <solution.icon weight="duotone" className="w-6 h-6 text-[#1c4194]" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground">{solution.title}</h3>
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground mb-2">{solution.title}</h3>
                     <p className="text-muted-foreground text-sm">{solution.description}</p>
                   </CardContent>
                 </Card>
@@ -102,11 +104,10 @@ export function Solution() {
               key={index}
               type="button"
               onClick={() => emblaApi?.scrollTo(index)}
-              className={`w-2.5 h-2.5 rounded-full transition-all ${
-                index === selectedIndex
-                  ? "bg-[#1c4194] w-6"
-                  : "bg-[#1c4194]/20 hover:bg-[#1c4194]/40"
-              }`}
+              className={`w-2.5 h-2.5 rounded-full transition-all ${index === selectedIndex
+                ? "bg-[#1c4194] w-6"
+                : "bg-[#1c4194]/20 hover:bg-[#1c4194]/40"
+                }`}
             />
           ))}
         </div>

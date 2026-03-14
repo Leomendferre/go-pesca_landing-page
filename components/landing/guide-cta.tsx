@@ -1,21 +1,21 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Anchor, ChartLineUp, Calendar, CurrencyDollar, ArrowRight } from "@phosphor-icons/react"
+import { AnchorIcon, ChartLineUpIcon, CalendarIcon, CurrencyDollarIcon, ArrowRightIcon } from "@phosphor-icons/react"
 
 const benefits = [
   {
-    icon: ChartLineUp,
+    icon: ChartLineUpIcon,
     title: "Aumente sua visibilidade",
     description: "Seja encontrado por milhares de pescadores em todo o Brasil."
   },
   {
-    icon: Calendar,
+    icon: CalendarIcon,
     title: "Gestão simplificada",
     description: "Calendário integrado, reservas automáticas e confirmações instantâneas."
   },
   {
-    icon: CurrencyDollar,
+    icon: CurrencyDollarIcon,
     title: "Receba com segurança",
     description: "Pagamentos garantidos direto na sua conta após cada pescaria."
   }
@@ -29,7 +29,7 @@ export function GuideCTA() {
           {/* Content */}
           <div className="flex-1">
             <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm mb-6">
-              <Anchor weight="fill" className="w-4 h-4 text-[#d9853c]" />
+              <AnchorIcon weight="fill" className="w-4 h-4 text-[#d9853c]" />
               <span>Para Guias de Pesca</span>
             </div>
             
@@ -55,10 +55,10 @@ export function GuideCTA() {
               ))}
             </div>
             
-            <Button size="lg" className="bg-[#d9853c] hover:bg-[#c87333] text-white font-semibold" asChild>
+            <Button size="lg" className="bg-[#d9853c] hover:bg-[#c87333] w-full text-white font-semibold" asChild>
               <a href="#lista">
                 Quero ser um Guia GoPesca
-                <ArrowRight weight="bold" className="ml-2 w-5 h-5" />
+                <ArrowRightIcon weight="bold" className="ml-2 w-5 h-5" />
               </a>
             </Button>
           </div>

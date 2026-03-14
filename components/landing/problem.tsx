@@ -1,26 +1,26 @@
 "use client"
 
 import { Card, CardContent } from "@/components/ui/card"
-import { MagnifyingGlass, CreditCard, ShieldWarning, Question } from "@phosphor-icons/react"
+import { MagnifyingGlassIcon, CreditCardIcon, ShieldWarningIcon, QuestionIcon } from "@phosphor-icons/react"
 
 const problems = [
   {
-    icon: MagnifyingGlass,
+    icon: MagnifyingGlassIcon,
     title: "Difícil encontrar guias",
     description: "Pesquisar em grupos de WhatsApp e redes sociais é trabalhoso e pouco confiável."
   },
   {
-    icon: CreditCard,
+    icon: CreditCardIcon,
     title: "Pagamentos inseguros",
     description: "Transferências via PIX sem garantias deixam você vulnerável a golpes."
   },
   {
-    icon: ShieldWarning,
+    icon: ShieldWarningIcon,
     title: "Sem verificação",
     description: "Como saber se o guia é experiente e possui as licenças necessárias?"
   },
   {
-    icon: Question,
+    icon: QuestionIcon,
     title: "Falta de informação",
     description: "Destinos, espécies, equipamentos... muitas dúvidas e poucas respostas claras."
   }
@@ -45,11 +45,13 @@ export function Problem() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {problems.map((problem, index) => (
             <Card key={index} className="border-none shadow-lg bg-card hover:shadow-xl transition-shadow">
-              <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-xl bg-[#ed6c21]/10 flex items-center justify-center mb-4">
-                  <problem.icon weight="duotone" className="w-6 h-6 text-[#ed6c21]" />
+              <CardContent>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#ed6c21]/10 flex items-center justify-center">
+                    <problem.icon weight="duotone" className="w-6 h-6 text-[#ed6c21]" />
+                  </div>
+                  <h3 className="text-lg font-semibold text-foreground">{problem.title}</h3>
                 </div>
-                <h3 className="text-lg font-semibold text-foreground mb-2">{problem.title}</h3>
                 <p className="text-muted-foreground text-sm">{problem.description}</p>
               </CardContent>
             </Card>

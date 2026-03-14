@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { List, X } from "@phosphor-icons/react"
+import { ListIcon, X } from "@phosphor-icons/react"
 import { useState } from "react"
 
 export function Header() {
@@ -46,7 +46,7 @@ export function Header() {
             className="md:hidden text-white p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X weight="bold" className="w-6 h-6" /> : <List weight="bold" className="w-6 h-6" />}
+            {mobileMenuOpen ? <X weight="bold" className="w-6 h-6" /> : <ListIcon weight="bold" className="w-6 h-6" />}
           </button>
         </div>
         
