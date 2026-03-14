@@ -35,7 +35,7 @@ interface WaitlistFormState {
   email: string
   cidade: string
   estado: BrazilianState | ""
-  tipo_pesca: FishingType | ""
+  tipo_pesca: FishingType[]
   tipo_usuario: "pescador" | "guia"
 }
 
@@ -54,7 +54,7 @@ export function Waitlist() {
     email: "",
     cidade: "",
     estado: "",
-    tipo_pesca: "",
+    tipo_pesca: [],
     tipo_usuario: "pescador",
   })
   const [status, setStatus] = useState<WaitlistStatus>("idle")
@@ -67,7 +67,7 @@ export function Waitlist() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.nome || !form.email || !form.cidade || !form.estado || !form.tipo_pesca) return
+    if (!form.nome || !form.email || !form.cidade || !form.estado || form.tipo_pesca.length === 0) return
 
     setStatus("loading")
     setErrorMsg("")
@@ -97,7 +97,7 @@ export function Waitlist() {
 
       setSubmittedName(form.nome)
       setStatus("success")
-      setForm({ nome: "", email: "", cidade: "", estado: "", tipo_pesca: "", tipo_usuario: "pescador" })
+      setForm({ nome: "", email: "", cidade: "", estado: "", tipo_pesca: [], tipo_usuario: "pescador" })
     } catch {
       setErrorMsg("Falha de conexão. Tente novamente.")
       setStatus("error")
@@ -222,21 +222,31 @@ export function Waitlist() {
                   Tipo de pesca favorita
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {fishingTypes.map((type) => (
-                    <button
-                      key={type.value}
-                      type="button"
-                      onClick={() => handleChange("tipo_pesca", type.value)}
-                      className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm font-medium transition-all ${
-                        form.tipo_pesca === type.value
-                          ? "bg-[#d9853c] border-[#d9853c] text-white"
-                          : "bg-white/5 border-white/20 text-white/60 hover:bg-white/10 hover:text-white hover:border-white/40"
-                      }`}
-                    >
-                      <span>{type.emoji}</span>
-                      <span>{type.label}</span>
-                    </button>
-                  ))}
+                  {fishingTypes.map((type) => {
+                    const selected = form.tipo_pesca.includes(type.value)
+                    return (
+                      <button
+                        key={type.value}
+                        type="button"
+                        onClick={() => {
+                          setForm((prev) => ({
+                            ...prev,
+                            tipo_pesca: selected
+                              ? prev.tipo_pesca.filter((t) => t !== type.value)
+                              : [...prev.tipo_pesca, type.value],
+                          }))
+                        }}
+                        className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm font-medium transition-all ${
+                          selected
+                            ? "bg-[#d9853c] border-[#d9853c] text-white"
+                            : "bg-white/5 border-white/20 text-white/60 hover:bg-white/10 hover:text-white hover:border-white/40"
+                        }`}
+                      >
+                        <span>{type.emoji}</span>
+                        <span>{type.label}</span>
+                      </button>
+                    )
+                  })}
                 </div>
               </div>
 
@@ -252,7 +262,7 @@ export function Waitlist() {
                 type="submit"
                 size="lg"
                 className="w-full bg-[#d9853c] hover:bg-[#c87333] text-white font-bold h-12 text-base rounded-xl"
-                disabled={status === "loading" || !form.tipo_pesca}
+                disabled={status === "loading" || form.tipo_pesca.length === 0}
               >
                 {status === "loading" ? (
                   <>

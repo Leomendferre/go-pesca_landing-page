@@ -25,15 +25,19 @@ export const waitlistSchema = z.object({
     "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO",
   ], { message: "Selecione um estado" }),
 
-  tipo_pesca: z.enum([
-    "esportiva",
-    "fly_fishing",
-    "mar_alto",
-    "costeira",
-    "agua_doce",
-    "noturna",
-    "outra",
-  ]),
+  tipo_pesca: z
+    .array(
+      z.enum([
+        "esportiva",
+        "fly_fishing",
+        "mar_alto",
+        "costeira",
+        "agua_doce",
+        "noturna",
+        "outra",
+      ])
+    )
+    .min(1, "Selecione pelo menos um tipo de pesca"),
 
   tipo_usuario: z.enum(["pescador", "guia"]),
 })
