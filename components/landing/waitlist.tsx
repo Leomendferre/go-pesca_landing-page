@@ -202,7 +202,7 @@ export function Waitlist() {
                   value={form.estado}
                   onChange={(e) => handleChange("estado", e.target.value)}
                   required
-                  className={`w-24 h-12 px-2 rounded-xl bg-white/10 border border-white/20 text-sm focus:outline-none focus:border-[#d9853c] focus:bg-white/15 transition-all appearance-none text-center ${
+                  className={`w-24 h-12 px-2 rounded-xl bg-white/10 border border-white/20 text-sm focus:outline-none focus:border-[#d9853c] focus:bg-white/15 transition-all appearance-none text-center selectScrollbar ${
                     form.estado ? "text-white" : "text-white/40"
                   }`}
                 >
