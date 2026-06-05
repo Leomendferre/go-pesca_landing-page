@@ -1,81 +1,103 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
+import { useEffect, useRef, useState } from "react"
 import {
+  UserIcon,
   EnvelopeSimpleIcon,
+  PhoneIcon,
+  MapPinIcon,
+  FishIcon,
   CheckCircleIcon,
-  Spinner as SpinnerIcon,
-  User,
-  MapPin,
-  Fish,
+  ShieldCheckIcon,
+  ClockIcon,
+  StarIcon,
+  SpinnerGapIcon,
 } from "@phosphor-icons/react"
-import { waitlistSchema, type WaitlistInput } from "@/lib/validations/waitlist"
-import type { BrazilianState, FishingType, WaitlistStatus } from "@/types/waitlist"
+import { waitlistSchema } from "@/lib/validations/waitlist"
+import { PERFIL_EVENT, type Perfil } from "@/lib/perfil"
+import type { BrazilianState, WaitlistStatus } from "@/types/waitlist"
 
-const ESTADOS: { value: BrazilianState; label: string }[] = [
-  { value: "AC", label: "Acre" }, { value: "AL", label: "Alagoas" },
-  { value: "AP", label: "Amapá" }, { value: "AM", label: "Amazonas" },
-  { value: "BA", label: "Bahia" }, { value: "CE", label: "Ceará" },
-  { value: "DF", label: "Distrito Federal" }, { value: "ES", label: "Espírito Santo" },
-  { value: "GO", label: "Goiás" }, { value: "MA", label: "Maranhão" },
-  { value: "MT", label: "Mato Grosso" }, { value: "MS", label: "Mato Grosso do Sul" },
-  { value: "MG", label: "Minas Gerais" }, { value: "PA", label: "Pará" },
-  { value: "PB", label: "Paraíba" }, { value: "PR", label: "Paraná" },
-  { value: "PE", label: "Pernambuco" }, { value: "PI", label: "Piauí" },
-  { value: "RJ", label: "Rio de Janeiro" }, { value: "RN", label: "Rio Grande do Norte" },
-  { value: "RS", label: "Rio Grande do Sul" }, { value: "RO", label: "Rondônia" },
-  { value: "RR", label: "Roraima" }, { value: "SC", label: "Santa Catarina" },
-  { value: "SP", label: "São Paulo" }, { value: "SE", label: "Sergipe" },
-  { value: "TO", label: "Tocantins" },
+const ESTADOS: BrazilianState[] = [
+  "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG",
+  "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO",
 ]
 
-interface WaitlistFormState {
-  nome: string
-  email: string
-  cidade: string
-  estado: BrazilianState | ""
-  tipo_pesca: FishingType[]
-  tipo_usuario: "pescador" | "guia"
+const COPY: Record<Perfil, { title: string; desc: string; cta: string; toggle: string }> = {
+  pescador: {
+    title: "Entre na lista prioritária da GoPesca",
+    desc: "Seja um dos primeiros a reservar com guias verificados — e ganhe benefícios exclusivos de fundador.",
+    cta: "Quero acesso antecipado 🎣",
+    toggle: "Quero reservar",
+  },
+  guia: {
+    title: "Seja um guia fundador da GoPesca",
+    desc: "Garanta destaque na sua região e lote sua agenda desde o lançamento. Vagas de fundador são limitadas por área.",
+    cta: "Quero captar mais clientes 🚀",
+    toggle: "Quero captar clientes",
+  },
 }
 
-const fishingTypes: { value: FishingType; label: string; emoji: string }[] = [
-  { value: "esportiva",   label: "Pesca Esportiva",   emoji: "🏆" },
-  { value: "fly_fishing", label: "Fly Fishing",        emoji: "🪰" },
-  { value: "mar_alto",    label: "Alto Mar",           emoji: "🌊" },
-  { value: "costeira",    label: "Pesca Costeira",     emoji: "⚓" },
-  { value: "agua_doce",   label: "Água Doce / Rio",    emoji: "🏞️" },
-  { value: "noturna",     label: "Pesca Noturna",      emoji: "🌙" },
-]
+/** Brazilian phone mask: (11) 99999-9999 / (11) 9999-9999 */
+function formatPhone(value: string): string {
+  const v = value.replace(/\D/g, "").slice(0, 11)
+  if (v.length > 10) return v.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, "($1) $2-$3")
+  if (v.length > 6) return v.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, "($1) $2-$3")
+  if (v.length > 2) return v.replace(/^(\d{2})(\d{0,5}).*/, "($1) $2")
+  if (v.length > 0) return v.replace(/^(\d{0,2}).*/, "($1")
+  return ""
+}
+
+interface FormState {
+  nome: string
+  email: string
+  telefone: string
+  cidade: string
+  estado: BrazilianState | ""
+  tipo_usuario: Perfil
+}
+
+const EMPTY_FORM: FormState = {
+  nome: "",
+  email: "",
+  telefone: "",
+  cidade: "",
+  estado: "",
+  tipo_usuario: "pescador",
+}
 
 export function Waitlist() {
-  const [form, setForm] = useState<WaitlistFormState>({
-    nome: "",
-    email: "",
-    cidade: "",
-    estado: "",
-    tipo_pesca: [],
-    tipo_usuario: "pescador",
-  })
+  const [form, setForm] = useState<FormState>(EMPTY_FORM)
   const [status, setStatus] = useState<WaitlistStatus>("idle")
   const [errorMsg, setErrorMsg] = useState("")
   const [submittedName, setSubmittedName] = useState("")
+  const successRef = useRef<HTMLDivElement | null>(null)
 
-  const handleChange = (field: keyof WaitlistFormState, value: string) => {
+  const copy = COPY[form.tipo_usuario]
+
+  // Sync the toggle when a "Sou guia / Quero reservar" CTA is clicked elsewhere.
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const perfil = (e as CustomEvent<Perfil>).detail
+      if (perfil === "pescador" || perfil === "guia") {
+        setForm((prev) => ({ ...prev, tipo_usuario: perfil }))
+      }
+    }
+    window.addEventListener(PERFIL_EVENT, handler)
+    return () => window.removeEventListener(PERFIL_EVENT, handler)
+  }, [])
+
+  const setField = (field: keyof FormState, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!form.nome || !form.email || !form.cidade || !form.estado || form.tipo_pesca.length === 0) return
-
     setStatus("loading")
     setErrorMsg("")
 
     const parsed = waitlistSchema.safeParse(form)
     if (!parsed.success) {
-      const firstError = parsed.error.errors[0]?.message ?? "Dados inválidos"
-      setErrorMsg(firstError)
+      setErrorMsg(parsed.error.errors[0]?.message ?? "Verifique os campos e tente novamente.")
       setStatus("error")
       return
     }
@@ -86,7 +108,6 @@ export function Waitlist() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(parsed.data),
       })
-
       const json = await res.json()
 
       if (!res.ok) {
@@ -95,9 +116,12 @@ export function Waitlist() {
         return
       }
 
-      setSubmittedName(form.nome)
+      setSubmittedName(form.nome.split(" ")[0] ?? "")
       setStatus("success")
-      setForm({ nome: "", email: "", cidade: "", estado: "", tipo_pesca: [], tipo_usuario: "pescador" })
+      setForm({ ...EMPTY_FORM, tipo_usuario: form.tipo_usuario })
+      requestAnimationFrame(() =>
+        successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }),
+      )
     } catch {
       setErrorMsg("Falha de conexão. Tente novamente.")
       setStatus("error")
@@ -105,182 +129,187 @@ export function Waitlist() {
   }
 
   return (
-    <section className="py-20 bg-[#1c4194]" id="lista">
-      <div className="container mx-auto px-4">
-        <div className="max-w-xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-balance">
-              Seja o primeiro a saber quando lançarmos
-            </h2>
-            <p className="text-white/80 text-lg text-pretty">
-              Entre na lista de espera e garanta acesso antecipado. Os primeiros cadastrados terão benefícios exclusivos.
-            </p>
+    <section
+      id="lista"
+      className="relative overflow-hidden bg-gradient-to-b from-[#1c4194] to-[#16357c] py-16 text-white md:py-24"
+    >
+      {/* soft radial glow */}
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_60%_at_50%_0%,rgba(74,166,222,0.2),transparent_60%)]" />
+
+      <div className="container relative z-10 mx-auto px-5 md:px-6">
+        <div className="mx-auto max-w-xl">
+          <div className="mb-8 text-center">
+            <h2 className="text-balance text-3xl font-bold md:text-[2.5rem]">{copy.title}</h2>
+            <p className="mt-3 text-pretty text-base text-white/85 md:text-lg">{copy.desc}</p>
           </div>
 
-          {/* Success state */}
           {status === "success" ? (
-            <div className="flex items-center gap-4 bg-white/10 rounded-2xl p-6 border border-white/20">
-              <CheckCircleIcon weight="fill" className="w-10 h-10 text-[#5a9d5a] shrink-0" />
+            <div
+              ref={successRef}
+              className="flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-6"
+            >
+              <CheckCircleIcon weight="fill" className="size-11 shrink-0 text-[#5fae5f]" />
               <div>
-                <p className="font-bold text-white text-lg">Você está na lista, {submittedName || "pescador"}! 🎣</p>
-                <p className="text-white/70 text-sm mt-1">
+                <b className="text-lg">
+                  {submittedName ? `${submittedName}, você` : "Você"} está na lista! 🎣
+                </b>
+                <p className="mt-1 text-sm text-white/75">
                   Avisaremos assim que a GoPesca estiver disponível. Fique de olho no seu e-mail.
                 </p>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
-
-              {/* Tipo de usuário toggle */}
-              <div className="flex rounded-xl overflow-hidden border border-white/20 mb-2">
-                {(["pescador", "guia"] as const).map((tipo) => (
-                  <button
-                    key={tipo}
-                    type="button"
-                    onClick={() => handleChange("tipo_usuario", tipo)}
-                    className={`flex-1 py-3 text-sm font-semibold transition-all ${
-                      form.tipo_usuario === tipo
-                        ? "bg-[#d9853c] text-white"
-                        : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
-                    }`}
-                  >
-                    {tipo === "pescador" ? "🎣 Sou Pescador" : "⚓ Sou Guia de Pesca"}
-                  </button>
-                ))}
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3.5" noValidate>
+              {/* Profile toggle */}
+              <div className="mb-1 flex overflow-hidden rounded-2xl border border-white/22">
+                {(["pescador", "guia"] as const).map((key) => {
+                  const active = form.tipo_usuario === key
+                  return (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => setField("tipo_usuario", key)}
+                      className={`flex flex-1 items-center justify-center gap-2 py-3.5 text-sm font-bold transition-colors ${
+                        active ? "bg-[#d9853c] text-white" : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      <FishIcon weight={active ? "fill" : "regular"} className="size-4.5" />
+                      {COPY[key].toggle}
+                    </button>
+                  )
+                })}
               </div>
 
-              {/* Nome */}
-              <div className="relative">
-                <User
-                  weight="duotone"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none"
-                />
+              <Field icon={<UserIcon weight="duotone" className="size-5" />}>
                 <input
                   type="text"
-                  placeholder="Seu nome completo"
+                  name="nome"
                   value={form.nome}
-                  onChange={(e) => handleChange("nome", e.target.value)}
+                  onChange={(e) => setField("nome", e.target.value)}
+                  placeholder="Seu nome completo"
+                  autoComplete="name"
                   required
-                  className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-[#d9853c] focus:bg-white/15 transition-all text-sm"
+                  className="h-13 w-full rounded-xl border border-white/22 bg-white/10 pl-11 pr-4 text-sm text-white placeholder:text-white/50 transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none"
                 />
-              </div>
+              </Field>
 
-              {/* Email */}
-              <div className="relative">
-                <EnvelopeSimpleIcon
-                  weight="duotone"
-                  className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none"
-                />
+              <Field icon={<EnvelopeSimpleIcon weight="duotone" className="size-5" />}>
                 <input
                   type="email"
-                  placeholder="Seu melhor e-mail"
+                  name="email"
                   value={form.email}
-                  onChange={(e) => handleChange("email", e.target.value)}
+                  onChange={(e) => setField("email", e.target.value)}
+                  placeholder="Seu melhor e-mail"
+                  autoComplete="email"
                   required
-                  className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-[#d9853c] focus:bg-white/15 transition-all text-sm"
+                  className="h-13 w-full rounded-xl border border-white/22 bg-white/10 pl-11 pr-4 text-sm text-white placeholder:text-white/50 transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none"
                 />
-              </div>
+              </Field>
 
-              {/* Cidade + Estado */}
-              <div className="flex gap-3">
-                <div className="relative flex-1">
-                  <MapPin
-                    weight="duotone"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 pointer-events-none"
-                  />
+              <Field icon={<PhoneIcon weight="duotone" className="size-5" />}>
+                <input
+                  type="tel"
+                  name="telefone"
+                  inputMode="tel"
+                  value={form.telefone}
+                  onChange={(e) => setField("telefone", formatPhone(e.target.value))}
+                  placeholder="Celular / WhatsApp (DDD + número)"
+                  autoComplete="tel"
+                  required
+                  className="h-13 w-full rounded-xl border border-white/22 bg-white/10 pl-11 pr-4 text-sm text-white placeholder:text-white/50 transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none"
+                />
+              </Field>
+
+              {/* Cidade + UF */}
+              <div className="grid grid-cols-[1fr_84px] gap-3 sm:grid-cols-[1fr_96px]">
+                <Field icon={<MapPinIcon weight="duotone" className="size-5" />}>
                   <input
                     type="text"
-                    placeholder="Sua cidade"
+                    name="cidade"
                     value={form.cidade}
-                    onChange={(e) => handleChange("cidade", e.target.value)}
+                    onChange={(e) => setField("cidade", e.target.value)}
+                    placeholder="Sua cidade"
+                    autoComplete="address-level2"
                     required
-                    className="w-full h-12 pl-10 pr-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder:text-white/40 focus:outline-none focus:border-[#d9853c] focus:bg-white/15 transition-all text-sm"
+                    className="h-13 w-full rounded-xl border border-white/22 bg-white/10 pl-11 pr-4 text-sm text-white placeholder:text-white/50 transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none"
                   />
-                </div>
+                </Field>
                 <select
+                  name="estado"
                   value={form.estado}
-                  onChange={(e) => handleChange("estado", e.target.value)}
+                  onChange={(e) => setField("estado", e.target.value)}
                   required
-                  className={`w-24 h-12 px-2 rounded-xl bg-white/10 border border-white/20 text-sm focus:outline-none focus:border-[#d9853c] focus:bg-white/15 transition-all appearance-none text-center selectScrollbar ${
-                    form.estado ? "text-white" : "text-white/40"
+                  aria-label="Estado"
+                  className={`selectScrollbar h-13 w-full appearance-none rounded-xl border border-white/22 bg-white/10 px-3 text-center text-sm transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none ${
+                    form.estado ? "text-white" : "text-white/50"
                   }`}
                 >
-                  <option value="" disabled className="bg-[#1c4194] text-white/40">UF</option>
+                  <option value="" disabled className="bg-[#1c4194] text-white/60">
+                    UF
+                  </option>
                   {ESTADOS.map((uf) => (
-                    <option key={uf.value} value={uf.value} className="bg-[#1c4194] text-white">
-                      {uf.value}
+                    <option key={uf} value={uf} className="bg-[#1c4194] text-white">
+                      {uf}
                     </option>
                   ))}
                 </select>
               </div>
 
-              {/* Tipo de pesca */}
-              <div>
-                <label className="block text-white/60 text-xs font-semibold uppercase tracking-wide mb-2 pl-1">
-                  <Fish weight="duotone" className="inline w-4 h-4 mr-1 text-[#d9853c]" />
-                  Tipo de pesca favorita
-                </label>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                  {fishingTypes.map((type) => {
-                    const selected = form.tipo_pesca.includes(type.value)
-                    return (
-                      <button
-                        key={type.value}
-                        type="button"
-                        onClick={() => {
-                          setForm((prev) => ({
-                            ...prev,
-                            tipo_pesca: selected
-                              ? prev.tipo_pesca.filter((t) => t !== type.value)
-                              : [...prev.tipo_pesca, type.value],
-                          }))
-                        }}
-                        className={`flex items-center gap-2 px-3 py-2.5 rounded-xl border text-sm font-medium transition-all ${
-                          selected
-                            ? "bg-[#d9853c] border-[#d9853c] text-white"
-                            : "bg-white/5 border-white/20 text-white/60 hover:bg-white/10 hover:text-white hover:border-white/40"
-                        }`}
-                      >
-                        <span>{type.emoji}</span>
-                        <span>{type.label}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              </div>
-
-              {/* Error message */}
               {status === "error" && (
-                <p className="text-[#fca5a5] text-sm text-center bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3">
+                <p className="rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-center text-sm text-[#fca5a5]">
                   {errorMsg}
                 </p>
               )}
 
-              {/* Submit */}
-              <Button
+              <button
                 type="submit"
-                size="lg"
-                className="w-full bg-[#d9853c] hover:bg-[#c87333] text-white font-bold h-12 text-base rounded-xl"
-                disabled={status === "loading" || form.tipo_pesca.length === 0}
+                disabled={status === "loading"}
+                className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-full bg-[#d9853c] text-base font-bold text-white shadow-[0_14px_28px_-12px_rgba(217,133,60,0.8)] transition-all hover:bg-[#c87333] disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === "loading" ? (
                   <>
-                    <SpinnerIcon className="mr-2 w-5 h-5 animate-spin" />
+                    <SpinnerGapIcon className="size-5 animate-spin" />
                     Entrando na lista...
                   </>
                 ) : (
-                  "Garantir meu lugar na lista 🎣"
+                  copy.cta
                 )}
-              </Button>
+              </button>
 
-              <p className="text-white/40 text-xs text-center">
+              <p className="text-center text-xs text-white/50">
                 Sem spam. Só novidades importantes sobre o lançamento.
               </p>
             </form>
           )}
+
+          {/* Trust badges */}
+          <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3">
+            <Trust icon={<ShieldCheckIcon weight="bold" className="size-4.5 text-[#4aa6de]" />} label="Dados protegidos" />
+            <Trust icon={<ClockIcon weight="bold" className="size-4.5 text-[#4aa6de]" />} label="Acesso antecipado" />
+            <Trust icon={<StarIcon weight="bold" className="size-4.5 text-[#4aa6de]" />} label="Benefícios de fundador" />
+          </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function Field({ icon, children }: { icon: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <div className="relative">
+      <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-white/45">
+        {icon}
+      </span>
+      {children}
+    </div>
+  )
+}
+
+function Trust({ icon, label }: { icon: React.ReactNode; label: string }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/75">
+      {icon}
+      {label}
+    </span>
   )
 }

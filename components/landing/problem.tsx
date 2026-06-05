@@ -1,60 +1,67 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
-import { MagnifyingGlassIcon, CreditCardIcon, ShieldWarningIcon, QuestionIcon } from "@phosphor-icons/react"
+import {
+  MagnifyingGlassIcon,
+  CreditCardIcon,
+  ShieldWarningIcon,
+  QuestionIcon,
+  type Icon,
+} from "@phosphor-icons/react"
+import { Reveal } from "@/components/landing/reveal"
 
-const problems = [
+const PROBLEMS: { icon: Icon; title: string; description: string }[] = [
   {
     icon: MagnifyingGlassIcon,
     title: "Difícil encontrar guias",
-    description: "Pesquisar em grupos de WhatsApp e redes sociais é trabalhoso e pouco confiável."
+    description: "Procurar em grupos de WhatsApp e redes sociais é trabalhoso e pouco confiável.",
   },
   {
     icon: CreditCardIcon,
     title: "Pagamentos inseguros",
-    description: "Transferências via PIX sem garantias deixam você vulnerável a golpes."
+    description: "Transferências via PIX sem garantia deixam todo mundo vulnerável a golpes.",
   },
   {
     icon: ShieldWarningIcon,
     title: "Sem verificação",
-    description: "Como saber se o guia é experiente e possui as licenças necessárias?"
+    description: "Como saber se o guia é experiente e tem as licenças necessárias para operar?",
   },
   {
     icon: QuestionIcon,
     title: "Falta de informação",
-    description: "Destinos, espécies, equipamentos... muitas dúvidas e poucas respostas claras."
-  }
+    description: "Destinos, espécies, equipamentos… muitas dúvidas e poucas respostas claras.",
+  },
 ]
 
 export function Problem() {
   return (
-    <section className="py-20 bg-muted">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="inline-block text-[#d9853c] font-semibold text-sm uppercase tracking-wide mb-3">
-            O Problema
+    <section id="problema" className="bg-[#f3f6f7] py-16 md:py-24">
+      <div className="container mx-auto px-5 md:px-6">
+        <Reveal className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
+          <span className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#ed6c21]">
+            O problema
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
+          <h2 className="mt-3 text-balance text-3xl font-bold text-[#173440] md:text-[2.6rem]">
             Planejar uma pescaria não deveria ser tão difícil
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
-            Pescadores enfrentam diversos obstáculos para encontrar experiências de qualidade no Brasil.
+          <p className="mt-4 text-pretty text-base text-[#16323d]/65 md:text-lg">
+            Pescadores e guias perdem tempo e dinheiro com processos informais. A GoPesca
+            resolve os dois lados.
           </p>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {problems.map((problem, index) => (
-            <Card key={index} className="border-none shadow-lg bg-card hover:shadow-xl transition-shadow">
-              <CardContent>
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-12 h-12 rounded-xl bg-[#ed6c21]/10 flex items-center justify-center">
-                    <problem.icon weight="duotone" className="w-6 h-6 text-[#ed6c21]" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-foreground">{problem.title}</h3>
-                </div>
-                <p className="text-muted-foreground text-sm">{problem.description}</p>
-              </CardContent>
-            </Card>
+        </Reveal>
+
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {PROBLEMS.map((problem, i) => (
+            <Reveal
+              key={problem.title}
+              delay={i * 70}
+              className="rounded-2xl border border-[#16323d]/5 bg-white p-6 shadow-sm transition-all hover:-translate-y-1.5 hover:shadow-xl"
+            >
+              <div className="mb-4 grid size-12 place-items-center rounded-xl bg-[#ed6c21]/10">
+                <problem.icon weight="duotone" className="size-6 text-[#ed6c21]" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold text-[#173440]">{problem.title}</h3>
+              <p className="text-sm text-[#16323d]/65">{problem.description}</p>
+            </Reveal>
           ))}
         </div>
       </div>

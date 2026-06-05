@@ -1,88 +1,141 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { MapPinIcon, FishIcon, UsersIcon, ArrowRightIcon } from "@phosphor-icons/react"
+import { ArrowRightIcon, MapPinIcon, UsersIcon, FishIcon } from "@phosphor-icons/react"
+import { selectPerfil } from "@/lib/perfil"
+
+const STATS = [
+  { icon: MapPinIcon, value: "50+", label: "Destinos" },
+  { icon: UsersIcon, value: "100+", label: "Guias verificados" },
+  { icon: FishIcon, value: "30+", label: "Espécies" },
+]
 
 export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-[#173440]">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
+    <section id="top" className="relative overflow-hidden text-white">
+      {/* Background photo */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1541742425281-c1d3fc8aff96?auto=format&fit=crop&w=1920&q=80"
+          alt="Pescaria ao amanhecer — vara de pesca com pôr do sol dourado"
+          className="size-full object-cover"
+        />
       </div>
-      
-      <div className="container mx-auto px-4 py-20 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Content */}
-          <div className="flex-1 text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm mb-6">
-              <FishIcon weight="fill" className="w-4 h-4 text-[#d9853c]" />
-              <span>A nova era da pesca esportiva no Brasil</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight text-balance mb-6">
-              Encontre o <span className="text-[#d9853c]">guia perfeito</span> para sua próxima aventura de pesca
-            </h1>
-            
-            <p className="text-lg md:text-xl text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 text-pretty">
-              Conectamos pescadores a guias verificados em todo o Brasil. Reserve online, pague com segurança e viva experiências inesquecíveis.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-12">
-              <Button size="lg" className="bg-[#d9853c] hover:bg-[#c87333] text-white font-semibold px-8" asChild>
-                <a href="#lista">
-                  Entrar na Lista de Espera
-                  <ArrowRightIcon weight="bold" className="ml-2 w-5 h-5" />
-                </a>
-              </Button>
-              <Button size="lg" variant="outline" className="border-white/30 bg-background-transparent text-white hover:bg-white/10 hover:text-white" asChild>
-                <a href="#lista">
-                  Sou Guia de Pesca
-                </a>
-              </Button>
-            </div>
-            
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-8">
-              <div className="text-center lg:text-left">
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <MapPinIcon weight="fill" className="w-5 h-5 text-[#d9853c]" />
-                  <span className="text-2xl font-bold text-white">50+</span>
-                </div>
-                <span className="text-white/60 text-sm">Destinos</span>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <UsersIcon weight="fill" className="w-5 h-5 text-[#d9853c]" />
-                  <span className="text-2xl font-bold text-white">100+</span>
-                </div>
-                <span className="text-white/60 text-sm">Guias Verificados</span>
-              </div>
-              <div className="text-center lg:text-left">
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <FishIcon weight="fill" className="w-5 h-5 text-[#d9853c]" />
-                  <span className="text-2xl font-bold text-white">30+</span>
-                </div>
-                <span className="text-white/60 text-sm">Espécies</span>
-              </div>
-            </div>
+      {/* Overlay gradient */}
+      <div className="absolute inset-0 z-[1] bg-gradient-to-b from-[#173440]/85 via-[#173440]/60 to-[#1c4194]/90" />
+
+      <div className="container relative z-[2] mx-auto flex min-h-[100svh] flex-col justify-center px-5 pb-16 pt-32 md:px-6 md:pt-36">
+        <div className="max-w-3xl">
+          {/* Pill */}
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white/90 backdrop-blur-sm sm:text-sm">
+            <span className="gp-led size-2 rounded-full bg-[#d9853c]" />
+            A nova era da pesca esportiva no Brasil
+          </span>
+
+          <h1 className="mt-5 text-balance text-[2.4rem] font-bold leading-[1.05] sm:text-5xl lg:text-[4.2rem]">
+            Guias, <span className="text-[#d9853c]">lotem suas agendas.</span>
+            <br />
+            Pescadores, reservem com segurança.
+          </h1>
+
+          <p className="mt-5 max-w-xl text-pretty text-base text-white/85 sm:text-lg">
+            A GoPesca conecta guias de pesca e pescadores numa plataforma de reserva com
+            pagamento seguro, reputação e suporte em cada etapa.
+          </p>
+
+          {/* Dual path cards */}
+          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <PathCard
+              variant="guide"
+              tag="Vagas limitadas"
+              title="Sou guia de pesca"
+              description="Entre como parceiro fundador, ganhe destaque na sua região e transforme sua agenda em receita recorrente."
+              cta="Entrar na lista de espera"
+              perfil="guia"
+            />
+            <PathCard
+              variant="angler"
+              title="Quero reservar passeios"
+              description="Encontre guias verificados, compare avaliações e reserve sua próxima pescaria com pagamento protegido."
+              cta="Garantir acesso antecipado"
+              perfil="pescador"
+            />
           </div>
-          
-          {/* Logo/Image */}
-          <div className="flex-1 flex justify-center lg:justify-end">
-            <div className="relative w-72 h-72 md:w-96 md:h-96">
-              <div className="absolute inset-0 bg-[#1c4194] rounded-full opacity-20 blur-3xl" />
-              <img 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-01-24%20at%2016.02.22%20%282%29-N4sEyRoiqDGAUJ4eJMQWNOi5aexbBD.jpeg"
-                alt="GoPesca Logo"
-                className="relative w-full h-full object-contain rounded-3xl"
-              />
-            </div>
+
+          {/* Stats */}
+          <div className="mt-9 flex flex-wrap gap-x-8 gap-y-5">
+            {STATS.map((stat) => (
+              <div key={stat.label}>
+                <div className="flex items-center gap-2">
+                  <stat.icon weight="fill" className="size-6 text-[#d9853c]" />
+                  <span className="font-display text-2xl font-bold text-white sm:text-3xl">{stat.value}</span>
+                </div>
+                <span className="text-sm font-semibold text-white/60">{stat.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function PathCard({
+  variant,
+  tag,
+  title,
+  description,
+  cta,
+  perfil,
+}: {
+  variant: "guide" | "angler"
+  tag?: string
+  title: string
+  description: string
+  cta: string
+  perfil: "guia" | "pescador"
+}) {
+  const isGuide = variant === "guide"
+  return (
+    <a
+      href="#lista"
+      onClick={() => selectPerfil(perfil)}
+      className={`group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-white/16 p-6 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/40 hover:shadow-2xl ${
+        isGuide
+          ? "bg-gradient-to-br from-[#265a2e]/55 to-[#2f6e39]/20"
+          : "bg-gradient-to-br from-[#1c4194]/55 to-[#4aa6de]/20"
+      }`}
+    >
+      {tag && (
+        <span className="absolute right-3.5 top-3.5 rounded-full bg-[#d9853c] px-2.5 py-1 text-[0.66rem] font-extrabold uppercase tracking-wider text-white">
+          {tag}
+        </span>
+      )}
+      <span
+        className={`grid size-12 place-items-center rounded-xl ${
+          isGuide ? "bg-[#2f6e39]" : "bg-[#2d72b9]"
+        }`}
+      >
+        {isGuide ? (
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-6 text-white">
+            <path d="M12 3v3" />
+            <path d="M5.5 9.5 12 6l6.5 3.5" />
+            <path d="M4 14c2.5 2 5.5 3 8 3s5.5-1 8-3" />
+            <path d="M6 18c2 1.3 4 2 6 2s4-.7 6-2" />
+          </svg>
+        ) : (
+          <FishIcon weight="bold" className="size-6 text-white" />
+        )}
+      </span>
+      <h3 className="font-display text-xl font-bold text-white">{title}</h3>
+      <p className="text-sm text-white/80">{description}</p>
+      <span
+        className={`mt-1 inline-flex items-center gap-1.5 text-sm font-bold ${
+          isGuide ? "text-[#d9853c]" : "text-[#4aa6de]"
+        }`}
+      >
+        {cta}
+        <ArrowRightIcon weight="bold" className="size-4 transition-transform group-hover:translate-x-1" />
+      </span>
+    </a>
   )
 }

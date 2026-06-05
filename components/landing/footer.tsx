@@ -1,50 +1,56 @@
 "use client"
 
-import {ThreadsLogoIcon, InstagramLogoIcon } from "@phosphor-icons/react"
+import { InstagramLogoIcon, ThreadsLogoIcon } from "@phosphor-icons/react"
+import { Brand } from "@/components/landing/brand"
 
 export function Footer() {
   return (
-    <footer className="bg-[#0f2a35] py-12">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          {/* Logo */}
-          <div className="flex items-center gap-2">
-            <img 
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-01-24%20at%2016.02.22%20%282%29-N4sEyRoiqDGAUJ4eJMQWNOi5aexbBD.jpeg"
-              alt="GoPesca"
-              className="w-10 h-10 rounded-lg"
-            />
-            <span className="font-bold text-xl text-white">GoPesca</span>
+    <footer className="bg-[#173440] px-0 py-14 text-white">
+      <div className="container mx-auto px-5 md:px-6">
+        {/* Top */}
+        <div className="flex flex-col gap-6 border-b border-white/10 pb-8 md:flex-row md:items-center md:justify-between">
+          <div className="flex items-start gap-3">
+            <Brand size="text-[1.3rem]" />
           </div>
-          
-          {/* Social Links */}
-          <div className="flex items-center gap-4">
-            <a href="https://www.instagram.com/gopescabr" target="_blank" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
-              <InstagramLogoIcon weight="fill" className="w-5 h-5" />
+          <p className="max-w-[32ch] text-sm text-white/60">
+            Sua aventura na pesca começa aqui.
+          </p>
+          <div className="flex gap-3">
+            <a
+              href="https://www.instagram.com/gopescabr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="grid size-10 place-items-center rounded-full bg-white/10 text-white/75 transition-all hover:-translate-y-0.5 hover:bg-[#d9853c] hover:text-white"
+            >
+              <InstagramLogoIcon weight="fill" className="size-5" />
             </a>
-            <a href="https://www.threads.com/@gopescabr" target="_blank" className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 hover:text-white transition-all">
-              <ThreadsLogoIcon weight="fill" className="w-5 h-5" />
+            <a
+              href="https://www.threads.com/@gopescabr"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Threads"
+              className="grid size-10 place-items-center rounded-full bg-white/10 text-white/75 transition-all hover:-translate-y-0.5 hover:bg-[#d9853c] hover:text-white"
+            >
+              <ThreadsLogoIcon weight="fill" className="size-5" />
             </a>
           </div>
         </div>
-        
-        <div className="border-t border-white/10 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-            <p className="text-white/50 text-sm">
-              2026 GoPesca. Todos os direitos reservados.
-            </p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="text-white/50 hover:text-white text-sm transition-colors">
-                Termos de Uso
-              </a>
-              <a href="#" className="text-white/50 hover:text-white text-sm transition-colors">
-                Privacidade
-              </a>
-              <a href="#" className="text-white/50 hover:text-white text-sm transition-colors">
-                Contato
-              </a>
-            </div>
-          </div>
+
+        {/* Bottom */}
+        <div className="flex flex-col items-center gap-4 pt-7 text-center md:flex-row md:justify-between md:text-left">
+          <p className="text-sm text-white/50">© 2026 GoPesca. Todos os direitos reservados.</p>
+          <nav className="flex gap-6">
+            <a href="#" className="text-sm text-white/55 transition-colors hover:text-white">
+              Termos de uso
+            </a>
+            <a href="#" className="text-sm text-white/55 transition-colors hover:text-white">
+              Privacidade
+            </a>
+            <a href="#" className="text-sm text-white/55 transition-colors hover:text-white">
+              Contato
+            </a>
+          </nav>
         </div>
       </div>
     </footer>

@@ -1,12 +1,3 @@
-export type FishingType =
-  | "esportiva"
-  | "fly_fishing"
-  | "mar_alto"
-  | "costeira"
-  | "agua_doce"
-  | "noturna"
-  | "outra"
-
 export type UserType = "pescador" | "guia"
 
 export type BrazilianState =

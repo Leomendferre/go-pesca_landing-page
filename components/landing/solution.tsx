@@ -1,114 +1,78 @@
 "use client"
 
-import { useCallback, useEffect, useState } from "react"
-import { Card, CardContent } from "@/components/ui/card"
-import { HeadsetIcon, CheckCircleIcon, ShieldCheckIcon, CalendarCheckIcon, WalletIcon, StarIcon } from "@phosphor-icons/react"
-import useEmblaCarousel from "embla-carousel-react"
-import Autoplay from "embla-carousel-autoplay"
+import {
+  ShieldCheckIcon,
+  CalendarCheckIcon,
+  WalletIcon,
+  StarIcon,
+  SealCheckIcon,
+  HeadsetIcon,
+  type Icon,
+} from "@phosphor-icons/react"
+import { Reveal } from "@/components/landing/reveal"
 
-const solutions = [
+const SOLUTIONS: { icon: Icon; title: string; description: string }[] = [
   {
     icon: ShieldCheckIcon,
-    title: "Guias Verificados",
-    description: "Todos os guias passam por verificação de documentos, licenças e avaliações de clientes."
+    title: "Guias verificados",
+    description: "Documentos, licenças e avaliações conferidos. Você reserva com quem é de confiança.",
   },
   {
     icon: CalendarCheckIcon,
-    title: "Reserva Online",
-    description: "Agende sua pescaria em poucos cliques, com confirmação instantânea e lembretes automáticos."
+    title: "Reserva online",
+    description: "Agende em poucos cliques, com confirmação instantânea e lembretes automáticos.",
   },
   {
     icon: WalletIcon,
-    title: "Pagamento Seguro",
-    description: "Pague com cartão ou PIX. O valor só é liberado ao guia após a experiência."
+    title: "Pagamento seguro",
+    description: "Pague com cartão ou PIX. O valor só é liberado ao guia depois da experiência.",
   },
   {
     icon: StarIcon,
-    title: "Avaliações Reais",
-    description: "Leia avaliações de outros pescadores antes de reservar sua experiência."
+    title: "Avaliações reais",
+    description: "Leia experiências de outros pescadores antes de escolher seu guia.",
   },
   {
-    icon: CheckCircleIcon,
+    icon: SealCheckIcon,
     title: "Garantia GoPesca",
-    description: "Reembolso total se a experiência não corresponder ao anunciado."
+    description: "Reembolso total se a experiência não corresponder ao que foi anunciado.",
   },
   {
     icon: HeadsetIcon,
-    title: "Suporte Dedicado",
-    description: "Nossa equipe está disponível para ajudar antes, durante e depois da sua pescaria."
-  }
+    title: "Suporte dedicado",
+    description: "Nossa equipe ajuda antes, durante e depois da sua pescaria.",
+  },
 ]
 
 export function Solution() {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start" },
-    [Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })]
-  )
-  const [selectedIndex, setSelectedIndex] = useState(0)
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return
-    setSelectedIndex(emblaApi.selectedScrollSnap())
-  }, [emblaApi])
-
-  useEffect(() => {
-    if (!emblaApi) return
-    onSelect()
-    emblaApi.on("select", onSelect)
-    return () => { emblaApi.off("select", onSelect) }
-  }, [emblaApi, onSelect])
-
   return (
-    <section className="py-20 bg-card">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <span className="inline-block text-[#265a2e] font-semibold text-sm uppercase tracking-wide mb-3">
-            A Solução
+    <section id="solucao" className="bg-white py-16 md:py-24">
+      <div className="container mx-auto px-5 md:px-6">
+        <Reveal className="mx-auto mb-12 max-w-2xl text-center md:mb-16">
+          <span className="text-xs font-extrabold uppercase tracking-[0.14em] text-[#265a2e]">
+            A plataforma
           </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 text-balance">
-            GoPesca: sua plataforma de pesca completa
+          <h2 className="mt-3 text-balance text-3xl font-bold text-[#173440] md:text-[2.6rem]">
+            Tudo o que faltava para conectar pesca e confiança
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto text-pretty">
-            Criamos a solução que faltava para conectar pescadores e guias de forma segura e profissional.
+          <p className="mt-4 text-pretty text-base text-[#16323d]/65 md:text-lg">
+            Criamos a solução que une pescadores e guias de forma segura, simples e profissional.
           </p>
-        </div>
+        </Reveal>
 
-        {/* Carousel */}
-        <div className="overflow-hidden" ref={emblaRef}>
-          <div className="flex -ml-4">
-            {solutions.map((solution, index) => (
-              <div
-                key={index}
-                className="min-w-0 shrink-0 basis-80 sm:basis-1/2 lg:basis-1/4 pl-4"
-              >
-                <Card className="border border-border/50 bg-muted/30 hover:border-[#1c4194]/30 hover:bg-[#1c4194]/5 transition-all h-full">
-                  <CardContent>
-                    <div className="flex items-center gap-4 mb-4">
-                      <div className="w-12 h-12 rounded-xl bg-[#1c4194]/10 flex items-center justify-center">
-                        <solution.icon weight="duotone" className="w-6 h-6 text-[#1c4194]" />
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground">{solution.title}</h3>
-                    </div>
-                    <p className="text-muted-foreground text-sm">{solution.description}</p>
-                  </CardContent>
-                </Card>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {SOLUTIONS.map((solution, i) => (
+            <Reveal
+              key={solution.title}
+              delay={(i % 3) * 70}
+              className="group rounded-2xl border border-[#16323d]/6 bg-[#f3f6f7] p-7 transition-all hover:-translate-y-1.5 hover:border-[#1c4194]/20 hover:bg-white hover:shadow-xl"
+            >
+              <div className="mb-4 grid size-13 place-items-center rounded-xl bg-[#1c4194]/10">
+                <solution.icon weight="duotone" className="size-6.5 text-[#1c4194]" />
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {solutions.map((_, index) => (
-            <button
-              key={index}
-              type="button"
-              onClick={() => emblaApi?.scrollTo(index)}
-              className={`w-2.5 h-2.5 rounded-full transition-all ${index === selectedIndex
-                ? "bg-[#1c4194] w-6"
-                : "bg-[#1c4194]/20 hover:bg-[#1c4194]/40"
-                }`}
-            />
+              <h3 className="mb-2.5 text-lg font-semibold text-[#173440]">{solution.title}</h3>
+              <p className="text-sm text-[#16323d]/65">{solution.description}</p>
+            </Reveal>
           ))}
         </div>
       </div>

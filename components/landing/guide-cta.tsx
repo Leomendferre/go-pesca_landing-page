@@ -1,80 +1,103 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { AnchorIcon, ChartLineUpIcon, CalendarIcon, CurrencyDollarIcon, ArrowRightIcon } from "@phosphor-icons/react"
+import {
+  StarFourIcon,
+  ClockIcon,
+  TrendUpIcon,
+  CalendarCheckIcon,
+  CurrencyDollarIcon,
+  ArrowRightIcon,
+  type Icon,
+} from "@phosphor-icons/react"
+import { Reveal } from "@/components/landing/reveal"
+import { selectPerfil } from "@/lib/perfil"
 
-const benefits = [
+const BENEFITS: { icon: Icon; title: string; description: string }[] = [
   {
-    icon: ChartLineUpIcon,
+    icon: TrendUpIcon,
     title: "Aumente sua visibilidade",
-    description: "Seja encontrado por milhares de pescadores em todo o Brasil."
+    description: "Seja encontrado por milhares de pescadores em todo o Brasil.",
   },
   {
-    icon: CalendarIcon,
+    icon: CalendarCheckIcon,
     title: "Gestão simplificada",
-    description: "Calendário integrado, reservas automáticas e confirmações instantâneas."
+    description: "Calendário integrado, reservas automáticas e confirmações instantâneas.",
   },
   {
     icon: CurrencyDollarIcon,
     title: "Receba com segurança",
-    description: "Pagamentos garantidos direto na sua conta após cada pescaria."
-  }
+    description: "Pagamentos garantidos direto na sua conta após cada pescaria.",
+  },
 ]
 
 export function GuideCTA() {
   return (
-    <section className="py-20 bg-[#265a2e]">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          {/* Content */}
-          <div className="flex-1">
-            <div className="inline-flex items-center gap-2 bg-white/10 text-white/90 px-4 py-2 rounded-full text-sm mb-6">
-              <AnchorIcon weight="fill" className="w-4 h-4 text-[#d9853c]" />
-              <span>Para Guias de Pesca</span>
+    <section
+      id="guias"
+      className="overflow-hidden bg-gradient-to-br from-[#265a2e] to-[#1e4a25] py-16 text-white md:py-24"
+    >
+      <div className="container mx-auto grid items-center gap-10 px-5 md:px-6 lg:grid-cols-2 lg:gap-16">
+        {/* Visual — first on mobile, right on desktop */}
+        <Reveal className="order-first lg:order-last">
+          <div className="relative mx-auto max-w-md lg:max-w-none">
+            <img
+              src="https://images.unsplash.com/photo-1529230117010-b6c436154f25?auto=format&fit=crop&w=800&q=80"
+              alt="Guia de pesca segurando vara profissionalmente"
+              className="aspect-[4/5] w-full rounded-3xl border border-white/14 object-cover shadow-2xl"
+            />
+            <div className="absolute -bottom-4 right-2 max-w-[14rem] rounded-2xl bg-white p-4 shadow-xl sm:-right-4">
+              <b className="font-display text-3xl font-bold leading-none text-[#265a2e]">+38%</b>
+              <span className="mt-1 block text-xs text-[#16323d]/65">
+                de ocupação média na agenda dos guias parceiros*
+              </span>
             </div>
-            
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-balance">
-              Transforme sua paixão em negócio profissional
-            </h2>
-            
-            <p className="text-white/80 text-lg mb-8 text-pretty">
-              Cadastre-se na GoPesca e conecte-se com pescadores que buscam exatamente o que você oferece. Sem burocracia, com total suporte.
-            </p>
-            
-            <div className="space-y-6 mb-8">
-              {benefits.map((benefit, index) => (
-                <div key={index} className="flex gap-4">
-                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
-                    <benefit.icon weight="duotone" className="w-5 h-5 text-[#d9853c]" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-white mb-1">{benefit.title}</h3>
-                    <p className="text-white/70 text-sm">{benefit.description}</p>
-                  </div>
+          </div>
+        </Reveal>
+
+        {/* Text */}
+        <Reveal as="div">
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold">
+            <StarFourIcon weight="fill" className="size-4 text-[#d9853c]" />
+            Para guias de pesca
+          </span>
+
+          <h2 className="mt-4 text-balance text-3xl font-bold md:text-[2.6rem]">
+            Transforme sua paixão em negócio profissional
+          </h2>
+
+          <p className="mt-4 max-w-xl text-pretty text-base text-white/85 md:text-lg">
+            Entre como guia fundador da GoPesca e receba prioridade no onboarding, destaque nas
+            primeiras buscas e suporte completo para configurar seus passeios.
+          </p>
+
+          <div className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm">
+            <ClockIcon weight="bold" className="size-5 shrink-0 text-[#d9853c]" />
+            As vagas de parceiros fundadores são limitadas por região.
+          </div>
+
+          <div className="mt-7 flex flex-col gap-5">
+            {BENEFITS.map((benefit) => (
+              <div key={benefit.title} className="flex gap-4">
+                <div className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/12">
+                  <benefit.icon weight="duotone" className="size-5.5 text-[#d9853c]" />
                 </div>
-              ))}
-            </div>
-            
-            <Button size="lg" className="bg-[#d9853c] hover:bg-[#c87333] w-full text-white font-semibold" asChild>
-              <a href="#lista">
-                Quero ser um Guia GoPesca
-                <ArrowRightIcon weight="bold" className="ml-2 w-5 h-5" />
-              </a>
-            </Button>
+                <div>
+                  <h3 className="font-semibold">{benefit.title}</h3>
+                  <p className="text-sm text-white/75">{benefit.description}</p>
+                </div>
+              </div>
+            ))}
           </div>
-          
-          {/* Image */}
-          <div className="flex-1 flex justify-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-[#1c4194] rounded-full opacity-20 blur-3xl" />
-              <img 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Image%202026-01-24%20at%2016.02.22%20%281%29-IvJntw4njBWULGv1mpBMRW49Z4qslJ.jpeg"
-                alt="GoPesca para Guias"
-                className="relative w-64 h-64 md:w-80 md:h-80 object-contain rounded-3xl"
-              />
-            </div>
-          </div>
-        </div>
+
+          <a
+            href="#lista"
+            onClick={() => selectPerfil("guia")}
+            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#d9853c] px-7 py-3.5 text-base font-bold text-white shadow-[0_14px_28px_-12px_rgba(217,133,60,0.8)] transition-all hover:-translate-y-0.5 hover:bg-[#c87333]"
+          >
+            Quero ser guia fundador
+            <ArrowRightIcon weight="bold" className="size-5" />
+          </a>
+        </Reveal>
       </div>
     </section>
   )

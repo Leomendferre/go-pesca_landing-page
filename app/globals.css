@@ -75,7 +75,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
+  --font-sans: var(--font-mulish), system-ui, sans-serif;
+  --font-display: var(--font-quicksand), system-ui, sans-serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -119,9 +120,60 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: smooth;
+    /* fixed header offset so anchor jumps don't hide behind it */
+    scroll-padding-top: 72px;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     @apply bg-background text-foreground;
+    overflow-x: hidden;
   }
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+}
+
+/* Reveal-on-scroll (driven by components/landing/reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Pulsing "live" dot used in the hero pill */
+@keyframes gp-led {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 133, 60, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(217, 133, 60, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 133, 60, 0);
+  }
+}
+.gp-led {
+  animation: gp-led 2.2s infinite;
 }
 
 .bodyScrollbar {

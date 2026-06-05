@@ -13,6 +13,13 @@ export const waitlistSchema = z.object({
     .max(254)
     .transform((v) => v.trim().toLowerCase()),
 
+  // Telefone/WhatsApp — máscara no cliente, mas armazenamos só os dígitos (DDD + número).
+  telefone: z
+    .string()
+    .min(1, "Telefone obrigatório")
+    .transform((v) => v.replace(/\D/g, ""))
+    .refine((v) => v.length === 10 || v.length === 11, "Informe um celular válido com DDD"),
+
   cidade: z
     .string()
     .min(2, "Cidade muito curta")
@@ -24,20 +31,6 @@ export const waitlistSchema = z.object({
     "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI",
     "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO",
   ], { message: "Selecione um estado" }),
-
-  tipo_pesca: z
-    .array(
-      z.enum([
-        "esportiva",
-        "fly_fishing",
-        "mar_alto",
-        "costeira",
-        "agua_doce",
-        "noturna",
-        "outra",
-      ])
-    )
-    .min(1, "Selecione pelo menos um tipo de pesca"),
 
   tipo_usuario: z.enum(["pescador", "guia"]),
 })
