@@ -28,41 +28,43 @@ export function Hero() {
           {/* Pill */}
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold text-white/90 backdrop-blur-sm sm:text-sm">
             <span className="gp-led size-2 rounded-full bg-[#d9853c]" />
-            A nova era da pesca esportiva no Brasil
+            A nova forma de reservar pescarias no Brasil
           </span>
 
           <h1 className="mt-5 text-balance text-[2.4rem] font-bold leading-[1.05] sm:text-5xl lg:text-[4.2rem]">
-            Guias, <span className="text-[#d9853c]">lotem suas agendas.</span>
+            Sua <span className="text-[#d9853c]">aventura</span>
             <br />
-            Pescadores, reservem com segurança.
+            na pesca começa aqui.
           </h1>
 
           <p className="mt-5 max-w-xl text-pretty text-base text-white/85 sm:text-lg">
-            A GoPesca conecta guias de pesca e pescadores numa plataforma de reserva com
-            pagamento seguro, reputação e suporte em cada etapa.
+            A GoPesca conecta pescadores a guias verificados e
+            experiências de pesca cuidadosamente selecionadas,
+            com mais segurança, praticidade e confiança em cada etapa.
           </p>
 
           {/* Dual path cards */}
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             <PathCard
               variant="guide"
-              tag="Vagas limitadas"
-              title="Sou guia de pesca"
-              description="Entre como parceiro fundador, ganhe destaque na sua região e transforme sua agenda em receita recorrente."
-              cta="Entrar na lista de espera"
+              tag="PARA GUIAS"
+              title="Transforme sua experiência em mais reservas."
+              description="Mostre seu trabalho para novos pescadores, organize sua agenda e receba reservas com mais segurança e previsibilidade."
+              cta="Entrar na lista de guias"
               perfil="guia"
             />
             <PathCard
               variant="angler"
-              title="Quero reservar passeios"
-              description="Encontre guias verificados, compare avaliações e reserve sua próxima pescaria com pagamento protegido."
+              tag="PARA PESCADORES"
+              title="Encontre sua próxima grande pescaria."
+              description="Descubra guias verificados, compare experiências e reserve com confiança em poucos minutos."
               cta="Garantir acesso antecipado"
               perfil="pescador"
             />
           </div>
 
           {/* Stats */}
-          <div className="mt-9 flex flex-wrap gap-x-8 gap-y-5">
+          <div className="mt-9 flex flex-wrap justify-center gap-x-8 gap-y-5">
             {STATS.map((stat) => (
               <div key={stat.label}>
                 <div className="flex items-center gap-2">
@@ -72,6 +74,8 @@ export function Hero() {
                 <span className="text-sm font-semibold text-white/60">{stat.label}</span>
               </div>
             ))}
+
+            <span className="text-sm font-semibold text-white/60 w-full text-center">* Números projetados para lançamento da plataforma.</span>
           </div>
         </div>
       </div>
@@ -99,39 +103,47 @@ function PathCard({
     <a
       href="#lista"
       onClick={() => selectPerfil(perfil)}
-      className={`group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-white/16 p-6 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/40 hover:shadow-2xl ${
-        isGuide
-          ? "bg-gradient-to-br from-[#265a2e]/55 to-[#2f6e39]/20"
-          : "bg-gradient-to-br from-[#1c4194]/55 to-[#4aa6de]/20"
-      }`}
-    >
-      {tag && (
-        <span className="absolute right-3.5 top-3.5 rounded-full bg-[#d9853c] px-2.5 py-1 text-[0.66rem] font-extrabold uppercase tracking-wider text-white">
-          {tag}
-        </span>
-      )}
-      <span
-        className={`grid size-12 place-items-center rounded-xl ${
-          isGuide ? "bg-[#2f6e39]" : "bg-[#2d72b9]"
+      className={`group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-white/16 p-6 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-white/40 hover:shadow-2xl ${isGuide
+        ? "bg-gradient-to-br from-[#265a2e]/55 to-[#2f6e39]/20"
+        : "bg-gradient-to-br from-[#1c4194]/55 to-[#4aa6de]/20"
         }`}
-      >
-        {isGuide ? (
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-6 text-white">
-            <path d="M12 3v3" />
-            <path d="M5.5 9.5 12 6l6.5 3.5" />
-            <path d="M4 14c2.5 2 5.5 3 8 3s5.5-1 8-3" />
-            <path d="M6 18c2 1.3 4 2 6 2s4-.7 6-2" />
-          </svg>
-        ) : (
-          <FishIcon weight="bold" className="size-6 text-white" />
-        )}
-      </span>
+    >
+
+      {isGuide ? (
+        <div className="flex items-center gap-2">
+          <span
+            className="grid size-12 place-items-center rounded-xl bg-[#2f6e39]"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="size-6 text-white">
+              <path d="M12 3v3" />
+              <path d="M5.5 9.5 12 6l6.5 3.5" />
+              <path d="M4 14c2.5 2 5.5 3 8 3s5.5-1 8-3" />
+              <path d="M6 18c2 1.3 4 2 6 2s4-.7 6-2" />
+            </svg>
+          </span>
+
+          <span className="text-[0.675rem] uppercase tracking-wider text-white">
+            {tag}
+          </span>
+        </div>
+      ) : (
+        <div className="flex items-center gap-2">
+          <span
+            className="grid size-12 place-items-center rounded-xl bg-[#2d72b9]"
+          >
+            <FishIcon weight="bold" className="size-6 text-white" />
+          </span>
+
+          <span className="text-[0.675rem] uppercase tracking-wider text-white">
+            {tag}
+          </span>
+        </div>
+      )}
       <h3 className="font-display text-xl font-bold text-white">{title}</h3>
       <p className="text-sm text-white/80">{description}</p>
       <span
-        className={`mt-1 inline-flex items-center gap-1.5 text-sm font-bold ${
-          isGuide ? "text-[#d9853c]" : "text-[#4aa6de]"
-        }`}
+        className={`mt-1 inline-flex items-center gap-1.5 text-sm font-bold ${isGuide ? "text-[#d9853c]" : "text-[#4aa6de]"
+          }`}
       >
         {cta}
         <ArrowRightIcon weight="bold" className="size-4 transition-transform group-hover:translate-x-1" />

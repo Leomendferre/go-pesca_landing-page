@@ -25,7 +25,7 @@ const ESTADOS: BrazilianState[] = [
 const COPY: Record<Perfil, { title: string; desc: string; cta: string; toggle: string }> = {
   pescador: {
     title: "Entre na lista prioritária da GoPesca",
-    desc: "Seja um dos primeiros a reservar com guias verificados — e ganhe benefícios exclusivos de fundador.",
+    desc: "Seja um dos primeiros a reservar com guias verificados e ganhe benefícios exclusivos de fundador.",
     cta: "Quero acesso antecipado 🎣",
     toggle: "Quero reservar",
   },
