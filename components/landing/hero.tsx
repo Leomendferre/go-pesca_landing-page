@@ -75,7 +75,7 @@ export function Hero() {
               </div>
             ))}
 
-            <span className="text-sm font-semibold text-white/60 w-full text-center">* Números projetados para lançamento da plataforma.</span>
+            <span className="text-xs font-semibold text-white/60 w-full text-center">* Números projetados para lançamento da plataforma.</span>
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@ function PathCard({
         </div>
       )}
       <h3 className="font-display text-xl font-bold text-white">{title}</h3>
-      <p className="text-sm text-white/80">{description}</p>
+      <p className="text-sm text-white/80 min-h-[60px]">{description}</p>
       <span
         className={`mt-1 inline-flex items-center gap-1.5 text-sm font-bold ${isGuide ? "text-[#d9853c]" : "text-[#4aa6de]"
           }`}
