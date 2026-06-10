@@ -5,30 +5,31 @@ import {
   CreditCardIcon,
   ShieldWarningIcon,
   QuestionIcon,
+  WhatsappLogoIcon,
   type Icon,
 } from "@phosphor-icons/react"
 import { Reveal } from "@/components/landing/reveal"
 
 const PROBLEMS: { icon: Icon; title: string; description: string }[] = [
   {
-    icon: MagnifyingGlassIcon,
-    title: "Difícil encontrar guias",
-    description: "Procurar em grupos de WhatsApp e redes sociais é trabalhoso e pouco confiável.",
+    icon: WhatsappLogoIcon,
+    title: "Tudo acontece no WhatsApp",
+    description: "Informações dispersas, difícil comparar opções e organizar reservas.",
   },
   {
     icon: CreditCardIcon,
-    title: "Pagamentos inseguros",
-    description: "Transferências via PIX sem garantia deixam todo mundo vulnerável a golpes.",
+    title: "Falta de confiança",
+    description: "Nem sempre é fácil saber se o guia ou a experiência realmente atenderão às expectativas.",
   },
   {
     icon: ShieldWarningIcon,
-    title: "Sem verificação",
-    description: "Como saber se o guia é experiente e tem as licenças necessárias para operar?",
+    title: "Pagamentos inseguros",
+    description: "Transferências e negociações informais geram insegurança para ambos os lados.",
   },
   {
     icon: QuestionIcon,
-    title: "Falta de informação",
-    description: "Destinos, espécies, equipamentos… muitas dúvidas e poucas respostas claras.",
+    title: "Descobrir novos destinos exige muito esforço",
+    description: "As melhores oportunidades muitas vezes dependem apenas de indicação.",
   },
 ]
 

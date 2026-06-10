@@ -31,7 +31,7 @@ const COPY: Record<Perfil, { title: string; desc: string; cta: string; toggle: s
   },
   guia: {
     title: "Seja um guia fundador da GoPesca",
-    desc: "Garanta destaque na sua região e lote sua agenda desde o lançamento. Vagas de fundador são limitadas por área.",
+    desc: "Anuncie de graça, sem mensalidade você só paga quando recebe uma reserva. Vagas de fundador limitadas por região.",
     cta: "Quero captar mais clientes 🚀",
     toggle: "Quero captar clientes",
   },

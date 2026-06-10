@@ -49,7 +49,7 @@ export function Hero() {
               variant="guide"
               tag="PARA GUIAS"
               title="Transforme sua experiência em mais reservas."
-              description="Mostre seu trabalho para novos pescadores, organize sua agenda e receba reservas com mais segurança e previsibilidade."
+              description="Anuncie de graça, sem mensalidade você só paga quando recebe uma reserva. Organize sua agenda e ganhe previsibilidade."
               cta="Entrar na lista de guias"
               perfil="guia"
             />

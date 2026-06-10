@@ -41,8 +41,8 @@ const STEPS: Record<Perfil, Step[]> = {
     {
       num: "01",
       icon: UserCircleIcon,
-      title: "Crie seu perfil",
-      description: "Cadastre seus passeios, fotos e licenças. Nossa equipe verifica e te ajuda no onboarding.",
+      title: "Crie seu perfil grátis",
+      description: "Cadastre seus passeios, fotos e licenças sem pagar nada. Nossa equipe verifica e te ajuda no onboarding.",
     },
     {
       num: "02",
