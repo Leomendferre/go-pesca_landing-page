@@ -234,9 +234,8 @@ export function Waitlist() {
                       key={key}
                       type="button"
                       onClick={() => setField("tipo_usuario", key)}
-                      className={`flex flex-1 items-center justify-center gap-2 py-3.5 text-sm font-bold transition-colors ${
-                        active ? "bg-[#d9853c] text-white" : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
-                      }`}
+                      className={`flex flex-1 items-center justify-center gap-2 py-3.5 text-sm font-bold transition-colors ${active ? "bg-[#d9853c] text-white" : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
+                        }`}
                     >
                       <FishIcon weight={active ? "fill" : "regular"} className="size-4.5" />
                       {COPY[key].toggle}
@@ -305,9 +304,8 @@ export function Waitlist() {
                   onChange={(e) => setField("estado", e.target.value)}
                   required
                   aria-label="Estado"
-                  className={`selectScrollbar h-13 w-full appearance-none rounded-xl border border-white/22 bg-white/10 px-3 text-center text-sm transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none ${
-                    form.estado ? "text-white" : "text-white/50"
-                  }`}
+                  className={`selectScrollbar h-13 w-full appearance-none rounded-xl border border-white/22 bg-white/10 px-3 text-center text-sm transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none ${form.estado ? "text-white" : "text-white/50"
+                    }`}
                 >
                   <option value="" disabled className="bg-[#1c4194] text-white/60">
                     UF
@@ -339,11 +337,10 @@ export function Waitlist() {
                             type="button"
                             onClick={() => toggleEspecie(peixe)}
                             aria-pressed={selected}
-                            className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${
-                              selected
-                                ? "border-[#d9853c] bg-[#d9853c] text-white"
-                                : "border-white/20 bg-white/5 text-white/70 hover:border-white/40 hover:text-white"
-                            }`}
+                            className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${selected
+                              ? "border-[#d9853c] bg-[#d9853c] text-white"
+                              : "border-white/20 bg-white/5 text-white/70 hover:border-white/40 hover:text-white"
+                              }`}
                           >
                             {peixe}
                           </button>
@@ -370,29 +367,36 @@ export function Waitlist() {
                     </div>
 
                     {/* Adicionar espécie fora da lista */}
-                    <div className="mt-2.5 flex gap-2">
-                      <input
-                        type="text"
-                        value={peixeCustom}
-                        onChange={(e) => setPeixeCustom(e.target.value)}
-                        onKeyDown={(e) => {
-                          if (e.key === "Enter") {
-                            e.preventDefault()
-                            addCustomPeixe()
-                          }
-                        }}
-                        placeholder="Outra espécie? Digite e adicione"
-                        maxLength={40}
-                        className="h-12 w-full rounded-xl border border-white/22 bg-white/10 px-4 text-sm text-white placeholder:text-white/50 transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none"
-                      />
-                      <button
-                        type="button"
-                        onClick={addCustomPeixe}
-                        className="inline-flex h-12 shrink-0 items-center gap-1.5 rounded-xl border border-white/22 bg-white/10 px-4 text-sm font-bold text-white transition-all hover:bg-white/20"
-                      >
-                        <PlusIcon weight="bold" className="size-4" />
-                        Adicionar
-                      </button>
+                    <div className="mt-2.5">
+                      <label className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-white/70">
+                        <FishIcon weight="duotone" className="size-4 text-[#d9853c]" />
+                        Outra espécie?
+                      </label>
+
+                      <div className="flex gap-2">
+                        <input
+                          type="text"
+                          value={peixeCustom}
+                          onChange={(e) => setPeixeCustom(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              e.preventDefault()
+                              addCustomPeixe()
+                            }
+                          }}
+                          placeholder="Digite e adicione"
+                          maxLength={40}
+                          className="h-12 w-full rounded-xl border border-white/22 bg-white/10 px-4 text-sm text-white placeholder:text-white/50 transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none"
+                        />
+                        <button
+                          type="button"
+                          onClick={addCustomPeixe}
+                          className="inline-flex h-12 shrink-0 items-center gap-1.5 rounded-xl border border-white/22 bg-white/10 px-4 text-sm font-bold text-white transition-all hover:bg-white/20"
+                        >
+                          <PlusIcon weight="bold" className="size-4" />
+                          Adicionar
+                        </button>
+                      </div>
                     </div>
                   </div>
 
@@ -407,9 +411,8 @@ export function Waitlist() {
                       value={form.tipo_agua}
                       onChange={(e) => setField("tipo_agua", e.target.value)}
                       aria-label="Tipo de água"
-                      className={`selectScrollbar h-13 w-full appearance-none rounded-xl border border-white/22 bg-white/10 px-4 text-sm transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none ${
-                        form.tipo_agua ? "text-white" : "text-white/50"
-                      }`}
+                      className={`selectScrollbar h-13 w-full appearance-none rounded-xl border border-white/22 bg-white/10 px-4 text-sm transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none ${form.tipo_agua ? "text-white" : "text-white/50"
+                        }`}
                     >
                       <option value="" disabled className="bg-[#1c4194] text-white/60">
                         Selecione o tipo de água

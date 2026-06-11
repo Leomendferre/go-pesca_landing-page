@@ -7,6 +7,7 @@ import {
   StarIcon,
   SealCheckIcon,
   HeadsetIcon,
+  MapPinIcon,
   type Icon,
 } from "@phosphor-icons/react"
 import { Reveal } from "@/components/landing/reveal"
@@ -15,7 +16,17 @@ const SOLUTIONS: { icon: Icon; title: string; description: string }[] = [
   {
     icon: ShieldCheckIcon,
     title: "Guias verificados",
-    description: "Documentos, licenças e avaliações conferidos. Você reserva com quem é de confiança.",
+    description: "Mais segurança, confiança e praticidade para sua próxima pescaria.",
+  },
+  {
+    icon: WalletIcon,
+    title: "Pagamento seguro",
+    description: "Mais segurança, confiança e praticidade para sua próxima pescaria.",
+  },
+  {
+    icon: StarIcon,
+    title: "Avaliações reais",
+    description: "Leia experiências de outros pescadores antes de escolher seu guia.",
   },
   {
     icon: CalendarCheckIcon,
@@ -23,14 +34,9 @@ const SOLUTIONS: { icon: Icon; title: string; description: string }[] = [
     description: "Agende em poucos cliques, com confirmação instantânea e lembretes automáticos.",
   },
   {
-    icon: WalletIcon,
-    title: "Pagamento seguro",
-    description: "Pague com cartão ou PIX. O valor só é liberado ao guia depois da experiência.",
-  },
-  {
-    icon: StarIcon,
-    title: "Avaliações reais",
-    description: "Leia experiências de outros pescadores antes de escolher seu guia.",
+    icon: MapPinIcon,
+    title: "Novos destinos",
+    description: "Mais segurança, confiança e praticidade para sua próxima pescaria.",
   },
   {
     icon: SealCheckIcon,

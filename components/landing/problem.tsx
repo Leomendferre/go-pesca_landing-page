@@ -17,12 +17,12 @@ const PROBLEMS: { icon: Icon; title: string; description: string }[] = [
     description: "Informações dispersas, difícil comparar opções e organizar reservas.",
   },
   {
-    icon: CreditCardIcon,
+    icon: ShieldWarningIcon,
     title: "Falta de confiança",
     description: "Nem sempre é fácil saber se o guia ou a experiência realmente atenderão às expectativas.",
   },
   {
-    icon: ShieldWarningIcon,
+    icon: CreditCardIcon,
     title: "Pagamentos inseguros",
     description: "Transferências e negociações informais geram insegurança para ambos os lados.",
   },
