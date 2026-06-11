@@ -12,14 +12,30 @@ import {
   ClockIcon,
   StarIcon,
   SpinnerGapIcon,
+  DropIcon,
+  PlusIcon,
+  XIcon,
 } from "@phosphor-icons/react"
 import { waitlistSchema } from "@/lib/validations/waitlist"
 import { PERFIL_EVENT, type Perfil } from "@/lib/perfil"
-import type { BrazilianState, WaitlistStatus } from "@/types/waitlist"
+import type { BrazilianState, WaterType, WaitlistStatus } from "@/types/waitlist"
 
 const ESTADOS: BrazilianState[] = [
   "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG",
   "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO",
+]
+
+// Espécies clássicas de pesca esportiva no Brasil (água doce + salgada).
+const PEIXES_CLASSICOS = [
+  "Tucunaré", "Dourado", "Tambaqui", "Pintado", "Traíra", "Pirarucu",
+  "Robalo", "Tilápia", "Pacu", "Corvina", "Garoupa", "Anchova",
+  "Cavala", "Black Bass",
+]
+
+const TIPOS_AGUA: { value: WaterType; label: string }[] = [
+  { value: "doce", label: "Água doce" },
+  { value: "salgada", label: "Água salgada" },
+  { value: "ambas", label: "Doce e salgada" },
 ]
 
 const COPY: Record<Perfil, { title: string; desc: string; cta: string; toggle: string }> = {
@@ -54,6 +70,9 @@ interface FormState {
   cidade: string
   estado: BrazilianState | ""
   tipo_usuario: Perfil
+  // Exclusivos do guia
+  especialidades: string[]
+  tipo_agua: WaterType | ""
 }
 
 const EMPTY_FORM: FormState = {
@@ -63,6 +82,8 @@ const EMPTY_FORM: FormState = {
   cidade: "",
   estado: "",
   tipo_usuario: "pescador",
+  especialidades: [],
+  tipo_agua: "",
 }
 
 export function Waitlist() {
@@ -70,9 +91,40 @@ export function Waitlist() {
   const [status, setStatus] = useState<WaitlistStatus>("idle")
   const [errorMsg, setErrorMsg] = useState("")
   const [submittedName, setSubmittedName] = useState("")
+  const [peixeCustom, setPeixeCustom] = useState("")
   const successRef = useRef<HTMLDivElement | null>(null)
 
   const copy = COPY[form.tipo_usuario]
+  const isGuia = form.tipo_usuario === "guia"
+
+  const toggleEspecie = (nome: string) => {
+    setForm((prev) => ({
+      ...prev,
+      especialidades: prev.especialidades.includes(nome)
+        ? prev.especialidades.filter((e) => e !== nome)
+        : [...prev.especialidades, nome],
+    }))
+  }
+
+  const addCustomPeixe = () => {
+    const nome = peixeCustom.trim()
+    if (!nome) return
+    const exists = form.especialidades.some((e) => e.toLowerCase() === nome.toLowerCase())
+    if (!exists && form.especialidades.length < 12) {
+      setForm((prev) => ({ ...prev, especialidades: [...prev.especialidades, nome] }))
+    }
+    setPeixeCustom("")
+  }
+
+  const removeEspecie = (nome: string) => {
+    setForm((prev) => ({
+      ...prev,
+      especialidades: prev.especialidades.filter((e) => e !== nome),
+    }))
+  }
+
+  // Espécies digitadas pelo guia que não estão na lista de chips clássicos.
+  const customSpecies = form.especialidades.filter((e) => !PEIXES_CLASSICOS.includes(e))
 
   // Sync the toggle when a "Sou guia / Quero reservar" CTA is clicked elsewhere.
   useEffect(() => {
@@ -95,7 +147,19 @@ export function Waitlist() {
     setStatus("loading")
     setErrorMsg("")
 
-    const parsed = waitlistSchema.safeParse(form)
+    // Campos de guia só são enviados quando o perfil é guia.
+    const payload = {
+      nome: form.nome,
+      email: form.email,
+      telefone: form.telefone,
+      cidade: form.cidade,
+      estado: form.estado,
+      tipo_usuario: form.tipo_usuario,
+      especialidades: isGuia ? form.especialidades : [],
+      tipo_agua: isGuia && form.tipo_agua ? form.tipo_agua : undefined,
+    }
+
+    const parsed = waitlistSchema.safeParse(payload)
     if (!parsed.success) {
       setErrorMsg(parsed.error.errors[0]?.message ?? "Verifique os campos e tente novamente.")
       setStatus("error")
@@ -119,6 +183,7 @@ export function Waitlist() {
       setSubmittedName(form.nome.split(" ")[0] ?? "")
       setStatus("success")
       setForm({ ...EMPTY_FORM, tipo_usuario: form.tipo_usuario })
+      setPeixeCustom("")
       requestAnimationFrame(() =>
         successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" }),
       )
@@ -254,6 +319,110 @@ export function Waitlist() {
                   ))}
                 </select>
               </div>
+
+              {/* Campos exclusivos do guia */}
+              {isGuia && (
+                <div className="flex flex-col gap-5 rounded-2xl border border-white/15 bg-white/5 p-4">
+                  {/* Espécies de especialidade */}
+                  <div>
+                    <label className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-white/70">
+                      <FishIcon weight="duotone" className="size-4 text-[#d9853c]" />
+                      Espécies de especialidade
+                    </label>
+
+                    <div className="flex flex-wrap gap-2">
+                      {PEIXES_CLASSICOS.map((peixe) => {
+                        const selected = form.especialidades.includes(peixe)
+                        return (
+                          <button
+                            key={peixe}
+                            type="button"
+                            onClick={() => toggleEspecie(peixe)}
+                            aria-pressed={selected}
+                            className={`rounded-full border px-3 py-1.5 text-sm font-medium transition-all ${
+                              selected
+                                ? "border-[#d9853c] bg-[#d9853c] text-white"
+                                : "border-white/20 bg-white/5 text-white/70 hover:border-white/40 hover:text-white"
+                            }`}
+                          >
+                            {peixe}
+                          </button>
+                        )
+                      })}
+
+                      {/* Espécies digitadas (custom) */}
+                      {customSpecies.map((peixe) => (
+                        <span
+                          key={peixe}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-[#d9853c] bg-[#d9853c] px-3 py-1.5 text-sm font-medium text-white"
+                        >
+                          {peixe}
+                          <button
+                            type="button"
+                            onClick={() => removeEspecie(peixe)}
+                            aria-label={`Remover ${peixe}`}
+                            className="grid place-items-center rounded-full hover:bg-white/20"
+                          >
+                            <XIcon weight="bold" className="size-3.5" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Adicionar espécie fora da lista */}
+                    <div className="mt-2.5 flex gap-2">
+                      <input
+                        type="text"
+                        value={peixeCustom}
+                        onChange={(e) => setPeixeCustom(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault()
+                            addCustomPeixe()
+                          }
+                        }}
+                        placeholder="Outra espécie? Digite e adicione"
+                        maxLength={40}
+                        className="h-12 w-full rounded-xl border border-white/22 bg-white/10 px-4 text-sm text-white placeholder:text-white/50 transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none"
+                      />
+                      <button
+                        type="button"
+                        onClick={addCustomPeixe}
+                        className="inline-flex h-12 shrink-0 items-center gap-1.5 rounded-xl border border-white/22 bg-white/10 px-4 text-sm font-bold text-white transition-all hover:bg-white/20"
+                      >
+                        <PlusIcon weight="bold" className="size-4" />
+                        Adicionar
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Tipo de água */}
+                  <div>
+                    <label className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-white/70">
+                      <DropIcon weight="duotone" className="size-4 text-[#d9853c]" />
+                      Tipo de água em que atua
+                    </label>
+                    <select
+                      name="tipo_agua"
+                      value={form.tipo_agua}
+                      onChange={(e) => setField("tipo_agua", e.target.value)}
+                      aria-label="Tipo de água"
+                      className={`selectScrollbar h-13 w-full appearance-none rounded-xl border border-white/22 bg-white/10 px-4 text-sm transition-all focus:border-[#d9853c] focus:bg-white/15 focus:outline-none ${
+                        form.tipo_agua ? "text-white" : "text-white/50"
+                      }`}
+                    >
+                      <option value="" disabled className="bg-[#1c4194] text-white/60">
+                        Selecione o tipo de água
+                      </option>
+                      {TIPOS_AGUA.map((agua) => (
+                        <option key={agua.value} value={agua.value} className="bg-[#1c4194] text-white">
+                          {agua.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+              )}
 
               {status === "error" && (
                 <p className="rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-center text-sm text-[#fca5a5]">

@@ -1,5 +1,7 @@
 export type UserType = "pescador" | "guia"
 
+export type WaterType = "doce" | "salgada" | "ambas"
+
 export type BrazilianState =
   | "AC" | "AL" | "AP" | "AM" | "BA" | "CE" | "DF" | "ES" | "GO"
   | "MA" | "MT" | "MS" | "MG" | "PA" | "PB" | "PR" | "PE" | "PI"
