@@ -2,6 +2,7 @@
 
 import { InstagramLogoIcon, ThreadsLogoIcon } from "@phosphor-icons/react"
 import { Brand } from "@/components/landing/brand"
+import { PRIVACY_EMAIL } from "@/lib/legal"
 
 export function Footer() {
   return (
@@ -41,13 +42,16 @@ export function Footer() {
         <div className="flex flex-col items-center gap-4 pt-7 text-center md:flex-row md:justify-between md:text-left">
           <p className="text-sm text-white/50">© 2026 GoPesca. Todos os direitos reservados.</p>
           <nav className="flex gap-6">
-            <a href="#" className="text-sm text-white/55 transition-colors hover:text-white">
+            <a href="/termos" className="text-sm text-white/55 transition-colors hover:text-white">
               Termos de uso
             </a>
-            <a href="#" className="text-sm text-white/55 transition-colors hover:text-white">
+            <a href="/privacidade" className="text-sm text-white/55 transition-colors hover:text-white">
               Privacidade
             </a>
-            <a href="#" className="text-sm text-white/55 transition-colors hover:text-white">
+            <a
+              href={`mailto:${PRIVACY_EMAIL}`}
+              className="text-sm text-white/55 transition-colors hover:text-white"
+            >
               Contato
             </a>
           </nav>

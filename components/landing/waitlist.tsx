@@ -73,6 +73,8 @@ interface FormState {
   // Exclusivos do guia
   especialidades: string[]
   tipo_agua: WaterType | ""
+  // Consentimento LGPD
+  consentimento: boolean
 }
 
 const EMPTY_FORM: FormState = {
@@ -84,6 +86,7 @@ const EMPTY_FORM: FormState = {
   tipo_usuario: "pescador",
   especialidades: [],
   tipo_agua: "",
+  consentimento: false,
 }
 
 export function Waitlist() {
@@ -157,6 +160,7 @@ export function Waitlist() {
       tipo_usuario: form.tipo_usuario,
       especialidades: isGuia ? form.especialidades : [],
       tipo_agua: isGuia && form.tipo_agua ? form.tipo_agua : undefined,
+      consentimento: form.consentimento,
     }
 
     const parsed = waitlistSchema.safeParse(payload)
@@ -426,6 +430,29 @@ export function Waitlist() {
                   </div>
                 </div>
               )}
+
+              {/* Consentimento LGPD */}
+              <label className="flex cursor-pointer select-none items-start gap-3">
+                <input
+                  type="checkbox"
+                  name="consentimento"
+                  checked={form.consentimento}
+                  onChange={(e) => setForm((prev) => ({ ...prev, consentimento: e.target.checked }))}
+                  className="mt-0.5 size-5 shrink-0 cursor-pointer rounded border-white/30 bg-white/10 accent-[#d9853c]"
+                />
+                <span className="text-xs leading-relaxed text-white/70">
+                  Li e aceito a{" "}
+                  <a
+                    href="/privacidade"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-white underline underline-offset-2 hover:text-[#d9853c]"
+                  >
+                    Política de Privacidade
+                  </a>{" "}
+                  e autorizo a GoPesca a usar meus dados para me avisar sobre o lançamento da plataforma.
+                </span>
+              </label>
 
               {status === "error" && (
                 <p className="rounded-xl border border-red-400/20 bg-red-500/10 px-4 py-3 text-center text-sm text-[#fca5a5]">

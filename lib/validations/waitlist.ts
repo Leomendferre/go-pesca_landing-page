@@ -35,6 +35,10 @@ export const waitlistSchema = z
 
     tipo_usuario: z.enum(["pescador", "guia"]),
 
+    consentimento: z.literal(true, {
+      errorMap: () => ({ message: "É preciso aceitar a Política de Privacidade para continuar" }),
+    }),
+
     // Campos exclusivos do guia (validados condicionalmente no superRefine abaixo).
     especialidades: z
       .array(z.string().trim().min(1).max(40))

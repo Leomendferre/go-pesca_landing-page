@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { waitlistSchema } from "@/lib/validations/waitlist"
 import { supabaseAdmin } from "@/lib/supabase/server"
 import { checkRateLimit } from "@/lib/rate-limit"
+import { POLICY_VERSION } from "@/lib/legal"
 
 export async function POST(req: NextRequest) {
   try {
@@ -27,7 +28,12 @@ export async function POST(req: NextRequest) {
 
     const { error } = await supabaseAdmin
       .from("waitlist")
-      .insert({ ...parsed.data, referrer })
+      .insert({
+        ...parsed.data,
+        referrer,
+        consent_versao: POLICY_VERSION,
+        consent_em: new Date().toISOString(),
+      })
 
     if (error?.code === "23505") {
       return NextResponse.json(
