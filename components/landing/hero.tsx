@@ -5,8 +5,8 @@ import { selectPerfil } from "@/lib/perfil"
 
 const STATS = [
   { icon: MapPinIcon, value: "50+", label: "Destinos" },
-  { icon: UsersIcon, value: "100+", label: "Guias verificados" },
-  { icon: FishIcon, value: "30+", label: "Espécies" },
+  { icon: UsersIcon, value: "450+", label: "Guias verificados" },
+  { icon: FishIcon, value: "100+", label: "Espécies" },
 ]
 
 export function Hero() {
@@ -48,8 +48,8 @@ export function Hero() {
             <PathCard
               variant="guide"
               tag="PARA GUIAS"
-              title="Transforme sua experiência em mais reservas."
-              description="Anuncie de graça, sem mensalidade você só paga quando recebe uma reserva. Organize sua agenda e ganhe previsibilidade."
+              title="Anuncie de graça e sem mensalidade."
+              description="Mostre seu trabalho para novos pescadores, preencha sua agenda com segurança e previsibilidade."
               cta="Entrar na lista de guias"
               perfil="guia"
             />
@@ -57,7 +57,7 @@ export function Hero() {
               variant="angler"
               tag="PARA PESCADORES"
               title="Encontre sua próxima grande pescaria."
-              description="Descubra guias verificados, compare experiências e reserve com confiança em poucos minutos."
+              description="Descubra guias verificados, compare destinos, experiências e avaliações reais. Reserve com confiança em poucos minutos."
               cta="Garantir acesso antecipado"
               perfil="pescador"
             />
