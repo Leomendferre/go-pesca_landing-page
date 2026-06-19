@@ -41,15 +41,15 @@ const TIPOS_AGUA: { value: WaterType; label: string }[] = [
 const COPY: Record<Perfil, { title: string; desc: string; cta: string; toggle: string }> = {
   pescador: {
     title: "Entre na lista prioritária da GoPesca",
-    desc: "Seja um dos primeiros a reservar com guias verificados e ganhe benefícios exclusivos de fundador.",
+    desc: "Seja um dos primeiros a reservar com guias verificados e ganhe benefícios exclusivos.",
     cta: "Quero acesso antecipado 🎣",
-    toggle: "Quero reservar",
+    toggle: "PESCADOR",
   },
   guia: {
     title: "Seja um guia fundador da GoPesca",
     desc: "Anuncie de graça, sem mensalidade você só paga quando recebe uma reserva. Vagas de fundador limitadas por região.",
     cta: "Quero captar mais clientes 🚀",
-    toggle: "Quero captar clientes",
+    toggle: "GUIA",
   },
 }
 
@@ -485,7 +485,7 @@ export function Waitlist() {
           <div className="mt-7 flex flex-wrap justify-center gap-x-6 gap-y-3">
             <Trust icon={<ShieldCheckIcon weight="bold" className="size-4.5 text-[#4aa6de]" />} label="Dados protegidos" />
             <Trust icon={<ClockIcon weight="bold" className="size-4.5 text-[#4aa6de]" />} label="Acesso antecipado" />
-            <Trust icon={<StarIcon weight="bold" className="size-4.5 text-[#4aa6de]" />} label="Benefícios de fundador" />
+            <Trust icon={<StarIcon weight="bold" className="size-4.5 text-[#4aa6de]" />} label={isGuia ? "Benefícios de fundador" : "Benefícios"} />
           </div>
         </div>
       </div>

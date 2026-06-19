@@ -6,7 +6,6 @@ import {
   WalletIcon,
   StarIcon,
   SealCheckIcon,
-  HeadsetIcon,
   MapPinIcon,
   type Icon,
 } from "@phosphor-icons/react"
@@ -16,17 +15,17 @@ const SOLUTIONS: { icon: Icon; title: string; description: string }[] = [
   {
     icon: ShieldCheckIcon,
     title: "Guias verificados",
-    description: "Mais segurança, confiança e praticidade para sua próxima pescaria.",
+    description: "Todos os melhores profissionais em um só lugar.",
   },
   {
     icon: WalletIcon,
-    title: "Pagamento seguro",
-    description: "Mais segurança, confiança e praticidade para sua próxima pescaria.",
+    title: "Pagamento flexível e seguro",
+    description: "Até 12x para pagar e transações protegidas para reservar com segurança.",
   },
   {
     icon: StarIcon,
     title: "Avaliações reais",
-    description: "Leia experiências de outros pescadores antes de escolher seu guia.",
+    description: "Avaliações e opiniões de quem já pescou com nossos guias.",
   },
   {
     icon: CalendarCheckIcon,
@@ -36,17 +35,12 @@ const SOLUTIONS: { icon: Icon; title: string; description: string }[] = [
   {
     icon: MapPinIcon,
     title: "Novos destinos",
-    description: "Mais segurança, confiança e praticidade para sua próxima pescaria.",
+    description: "Encontre os melhores lugares para buscar seu próximo troféu.",
   },
   {
     icon: SealCheckIcon,
     title: "Garantia GoPesca",
     description: "Reembolso total se a experiência não corresponder ao que foi anunciado.",
-  },
-  {
-    icon: HeadsetIcon,
-    title: "Suporte dedicado",
-    description: "Nossa equipe ajuda antes, durante e depois da sua pescaria.",
   },
 ]
 

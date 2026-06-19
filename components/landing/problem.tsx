@@ -4,7 +4,7 @@ import {
   MagnifyingGlassIcon,
   CreditCardIcon,
   ShieldWarningIcon,
-  QuestionIcon,
+  MapPinIcon,
   WhatsappLogoIcon,
   type Icon,
 } from "@phosphor-icons/react"
@@ -24,10 +24,10 @@ const PROBLEMS: { icon: Icon; title: string; description: string }[] = [
   {
     icon: CreditCardIcon,
     title: "Pagamentos inseguros",
-    description: "Transferências e negociações informais geram insegurança para ambos os lados.",
+    description: "Opções de pagamentos limitadas. Transferências e negociações informais geram insegurança para ambos os lados.",
   },
   {
-    icon: QuestionIcon,
+    icon: MapPinIcon,
     title: "Descobrir novos destinos exige muito esforço",
     description: "As melhores oportunidades muitas vezes dependem apenas de indicação.",
   },

@@ -21,8 +21,8 @@ const STEPS: Record<Perfil, Step[]> = {
     {
       num: "01",
       icon: MagnifyingGlassIcon,
-      title: "Encontre seu guia",
-      description: "Busque por destino, espécie ou tipo de pesca e compare guias verificados perto de você.",
+      title: "Encontre seu guia perto de você e em todo o Brasil",
+      description: "Busque por destino, espécie ou tipo de pesca e compare guias verificados.",
     },
     {
       num: "02",
