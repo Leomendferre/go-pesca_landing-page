@@ -14,6 +14,7 @@ export const metadata: Metadata = {
   description:
     "Como a GoPesca coleta, usa e protege seus dados pessoais na lista de espera, em conformidade com a LGPD.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "/privacidade" },
 }
 
 export default function PoliticaPrivacidade() {

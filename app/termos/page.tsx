@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   title: "Termos de Uso — GoPesca",
   description: "Termos de uso da lista de espera da GoPesca.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "/termos" },
 }
 
 export default function TermosDeUso() {

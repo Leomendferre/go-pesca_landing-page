@@ -47,8 +47,9 @@ export function GuideCTA() {
         <Reveal className="order-first lg:order-last">
           <div className="relative mx-auto max-w-md lg:max-w-none">
             <img
-              src="https://images.unsplash.com/photo-1529230117010-b6c436154f25?auto=format&fit=crop&w=800&q=80"
+              src="/images/guia-de-pesca.jpg"
               alt="Guia de pesca segurando vara profissionalmente"
+              loading="lazy"
               className="aspect-[4/5] w-full rounded-3xl border border-white/14 object-cover shadow-2xl"
             />
             <div className="absolute -bottom-4 right-2 max-w-[14rem] rounded-2xl bg-white p-4 shadow-xl sm:-right-4">

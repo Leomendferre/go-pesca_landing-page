@@ -15,8 +15,9 @@ export function Hero() {
       {/* Background photo */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1541742425281-c1d3fc8aff96?auto=format&fit=crop&w=1920&q=80"
+          src="/images/hero-pescaria.jpg"
           alt="Pescaria ao amanhecer — vara de pesca com pôr do sol dourado"
+          fetchPriority="high"
           className="size-full object-cover"
         />
       </div>
