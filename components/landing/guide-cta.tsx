@@ -8,8 +8,6 @@ import {
   CalendarCheckIcon,
   CurrencyDollarIcon,
   ArrowRightIcon,
-  XIcon,
-  CheckIcon,
   type Icon,
 } from "@phosphor-icons/react"
 import { Reveal } from "@/components/landing/reveal"
@@ -34,7 +32,7 @@ const BENEFITS: { icon: Icon; title: string; description: string }[] = [
   {
     icon: CurrencyDollarIcon,
     title: "Receba com segurança",
-    description: "Pagamentos garantidos direto na sua conta após cada pescaria.",
+    description: "Pagamentos garantidos direto na sua conta.",
   },
 ]
 
@@ -70,44 +68,12 @@ export function GuideCTA() {
           </span>
 
           <h2 className="mt-4 text-balance text-3xl font-bold md:text-[2.6rem]">
-            Anuncie de graça. Pague só quando ganhar.
+            Anuncie de graça, preencha sua agenda e receba com segurança.
           </h2>
-
-          <p className="mt-4 max-w-xl text-pretty text-base text-white/85 md:text-lg">
-            Enquanto outras plataformas cobram mensalidade para você aparecer, na GoPesca o
-            cadastro é gratuito. Você só paga uma pequena comissão quando recebe uma reserva 
-            se não fechar, não paga nada.
-          </p>
-
-          {/* Diferencial central: grátis vs mensalidade */}
-          <div className="mt-6 grid gap-px overflow-hidden rounded-2xl border border-white/15 bg-white/10 sm:grid-cols-2">
-            <div className="flex items-start gap-3 bg-white/5 p-4">
-              <XIcon weight="bold" className="mt-0.5 size-5 shrink-0 text-white/50" />
-              <div>
-                <p className="text-sm font-semibold text-white/70 line-through decoration-white/40">
-                  Mensalidade fixa
-                </p>
-                <p className="mt-0.5 text-xs text-white/55">
-                  Outras plataformas: você paga todo mês, mesmo sem nenhuma reserva.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 bg-[#d9853c]/15 p-4">
-              <CheckIcon weight="bold" className="mt-0.5 size-5 shrink-0 text-[#d9853c]" />
-              <div>
-                <p className="text-sm font-bold text-white">R$ 0 por mês</p>
-                <p className="mt-0.5 text-xs text-white/75">
-                  GoPesca: comissão só sobre reservas concluídas. Sem risco, sem custo fixo.
-                </p>
-              </div>
-            </div>
-          </div>
-
           <div className="mt-5 inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-3 text-sm">
             <ClockIcon weight="bold" className="size-5 shrink-0 text-[#d9853c]" />
             Vagas de guia fundador limitadas por região com destaque nas primeiras buscas.
           </div>
-
           <div className="mt-7 flex flex-col gap-5">
             {BENEFITS.map((benefit) => (
               <div key={benefit.title} className="flex gap-4">
@@ -130,9 +96,6 @@ export function GuideCTA() {
             Cadastrar grátis como guia fundador
             <ArrowRightIcon weight="bold" className="size-5" />
           </a>
-          <p className="mt-3 text-center text-xs text-white/60">
-            Sem cartão de crédito. Sem mensalidade. Você só paga quando recebe uma reserva.
-          </p>
         </Reveal>
       </div>
     </section>
